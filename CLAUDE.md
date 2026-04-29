@@ -63,6 +63,14 @@ Use the `path` helpers from `src/lib/storage.ts` — never hand-build storage pa
 
 All ambient and entrance animation must check `window.matchMedia('(prefers-reduced-motion: reduce)').matches` and bail. The existing `useEntrance`, `AnimatedBackground`, `CyclingText`, and `PhoenixVisual` already do this — copy the pattern.
 
+### 7. The system is AI / tool agnostic
+
+The Atlas is a showcase of *capability types*, not a product page for any single vendor. Each capability page can name a specific tool (Atlassian Rovo, Anthropic Claude, etc.) when it's the actual implementation, but:
+
+- The framework — `Capability` / `Video` / `FAQ` types, `Slideshow` component, env-prefixed Firestore — has no vendor field, no vendor lock-in. Adding an OpenAI / Cursor / Gemini capability page tomorrow doesn't touch any framework code.
+- Two pages can solve adjacent problems with different vendors (e.g. `Spec to Design` is structured-pipeline-vendor-agnostic; `Claude Design` is conversational-with-Claude). That's intentional. Don't fold them.
+- Don't introduce a "vendor" enum, a "providers" registry, or any abstraction that constrains future capabilities to a fixed list. The system stays open.
+
 ## Current state
 
 - ✅ Dark-themed, customer-grade UI matching phoenix-dx.com aesthetic.

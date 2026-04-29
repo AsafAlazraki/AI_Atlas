@@ -4,6 +4,24 @@ Append-only record of architectural / process decisions. Most recent at top.
 
 ---
 
+## 2026-04-29 — Capability catalog expanded; AI/tool-agnostic codified
+
+User added five more capabilities to the catalog and stated the system needs to be AI/tool agnostic. New capability pages (slideshow pattern, full content):
+
+- **Code Review** (`/capabilities/code-review`) — project-aware PR review.
+- **Automated Testing** (`/capabilities/automated-testing`) — generation + maintenance + flake detection.
+- **Documentation Generation** (`/capabilities/documentation-generation`) — READMEs, API refs, ADRs, runbooks.
+- **Claude Design** (`/capabilities/claude-design`) — conversational design with Claude Artifacts.
+- **Release Notes Generation** (`/capabilities/release-notes`) — customer-facing notes from PRs/tickets.
+
+Catalog total is now eight capabilities. Roadmap updated: Code Review and Test Generation came off (they're shipped); Legacy Modernisation and Incident Response Copilot replaced them.
+
+Codified hard invariant **#7: AI / tool agnostic** in `CLAUDE.md`. The framework (types, Slideshow component, env-prefixed Firestore) has no vendor field. Capability pages can name specific tools when relevant (Rovo = Atlassian, Claude Design = Anthropic), but the system never assumes a vendor. Two capabilities can solve adjacent problems with different vendors (Spec to Design vs. Claude Design) — that's intentional and shouldn't be folded into one.
+
+Naming decision: `Spec to Design` was renamed from "Requirements to Figma" via popup with locked option `Spec to Design` (slug: `spec-to-design`).
+
+---
+
 ## 2026-04-29 — Slideshow capability pages, ambient animation, data-layer foundation, dev playbook
 
 User request after seeing the polished dashboard: bring it up to phoenix-dx.com animation fidelity (continuous flowing-wireframe background + cycling typewriter hero text), make the dashboard a no-scroll static viewport, prepare Firestore + Storage data layer for video demos, and document the way of building so multiple devs (each with their own Claude Code session) stay coherent.

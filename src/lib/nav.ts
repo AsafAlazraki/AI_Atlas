@@ -5,6 +5,11 @@ import {
   Cog6ToothIcon,
   UsersIcon,
   PaintBrushIcon,
+  BeakerIcon,
+  SwatchIcon,
+  CodeBracketIcon,
+  BookOpenIcon,
+  MegaphoneIcon,
 } from '@heroicons/react/24/outline';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -57,11 +62,51 @@ export const primaryNav: NavEntry[] = [
       },
       {
         type: 'leaf',
+        label: 'Code Review',
+        to: '/capabilities/code-review',
+        icon: CodeBracketIcon,
+        description:
+          'Project-aware PR review that catches what static analysis misses — security drift, architecture violations, and team conventions.',
+      },
+      {
+        type: 'leaf',
+        label: 'Automated Testing',
+        to: '/capabilities/automated-testing',
+        icon: BeakerIcon,
+        description:
+          'Generate, maintain, and de-flake unit / integration / E2E tests — keeping suites green as the codebase evolves.',
+      },
+      {
+        type: 'leaf',
+        label: 'Documentation Generation',
+        to: '/capabilities/documentation-generation',
+        icon: BookOpenIcon,
+        description:
+          'Auto-generate READMEs, API references, ADRs, and runbooks — and keep them in sync as code evolves.',
+      },
+      {
+        type: 'leaf',
         label: 'Spec to Design',
         to: '/capabilities/spec-to-design',
         icon: PaintBrushIcon,
         description:
           'Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes.',
+      },
+      {
+        type: 'leaf',
+        label: 'Claude Design',
+        to: '/capabilities/claude-design',
+        icon: SwatchIcon,
+        description:
+          'Conversational design with Claude — generate live, interactive UI directly from a brief and iterate in plain English.',
+      },
+      {
+        type: 'leaf',
+        label: 'Release Notes Generation',
+        to: '/capabilities/release-notes',
+        icon: MegaphoneIcon,
+        description:
+          'Compose customer-grade release notes from merged PRs and shipped tickets — grouped by audience, written in your voice.',
       },
     ],
   },

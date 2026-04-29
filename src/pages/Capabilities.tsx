@@ -16,14 +16,14 @@ const comingSoon: ComingSoon[] = [
       'Turn discovery conversations into structured user stories, acceptance criteria, and test scenarios — grounded in your domain context.',
   },
   {
-    title: 'Code Review Agent',
+    title: 'Legacy Modernisation',
     description:
-      'Project-aware review agent that catches what static analysis misses — security, architecture drift, and team conventions.',
+      'AI-assisted migration of legacy codebases — modernise frameworks, languages, and architectures incrementally without freezing the team.',
   },
   {
-    title: 'Test Generation',
+    title: 'Incident Response Copilot',
     description:
-      'Generate and maintain unit, integration, and end-to-end tests from specs and existing code paths.',
+      'Triage incoming alerts, recall similar past incidents, and suggest remediations from runbooks + telemetry.',
   },
   {
     title: 'Observability Insights',
