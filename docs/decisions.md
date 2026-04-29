@@ -4,6 +4,51 @@ Append-only record of architectural / process decisions. Most recent at top.
 
 ---
 
+## 2026-04-29 — Slideshow capability pages, ambient animation, data-layer foundation, dev playbook
+
+User request after seeing the polished dashboard: bring it up to phoenix-dx.com animation fidelity (continuous flowing-wireframe background + cycling typewriter hero text), make the dashboard a no-scroll static viewport, prepare Firestore + Storage data layer for video demos, and document the way of building so multiple devs (each with their own Claude Code session) stay coherent.
+
+### Capability pages become slideshows
+
+Every AI Capability page is now a stepped slideshow rendered by `<Slideshow>`, with three reusable building blocks: `<ContentStage>`, `<VideoStage>` (Firebase-Storage-backed), `<FAQStage>` (accordion). The standard stage order is **Overview → How it works → In action → Demo video → FAQ**. Pages compose stages as `SlideshowStage[]`. Refactored Rovo to this pattern; created Multi Agent Analysis and Spec to Design (renamed from "Requirements to Figma") with full slideshow stages.
+
+This is hard invariant #3: capability pages do not invent their own layout.
+
+### Dashboard: no-scroll, animated phoenix visual
+
+Two-column layout — kicker / cycling-text headline / tagline / CTAs on the left, animated `<PhoenixVisual>` on the right. Single viewport, no scroll. The `<PhoenixVisual>` has counter-rotating particle orbits, pulsing rings, halos, and a breathing centre icon. Replaces the three stat cards.
+
+### Ambient animation + cycling text
+
+Added `<AnimatedBackground>` (mounted in `DashboardLayout`) — flowing dotted SVG curves, three of them, each with their own dash-offset cycle and slow drift. Added `<CyclingText>` for the typewriter-style hero ("AI-powered software development → digital innovation → ..."). Both respect `prefers-reduced-motion`.
+
+### Data-layer foundation (no backend yet)
+
+Firebase Storage added to `firebase.ts`. New types under `src/types/` for `Capability`, `Video`, `FAQ`. New `src/lib/storage.ts` with `resolveVideoUrl`, `uploadFile`, and `path.*` helpers (canonical paths: `capabilities/<id>/videos|posters|thumbs/<filename>`). Security rules drafted: `firestore.rules` + `storage.rules` follow the public-read / admin-write model gated by `role: "admin"` custom claim. `firebase.json` includes Hosting + emulator config.
+
+No Cloud Functions. No reads from Firestore yet (capability metadata still hardcoded in pages + nav). Hooks/fetchers will be added when the first real Firestore data lands.
+
+### Two new capabilities added to nav
+
+- **Multi Agent Analysis** at `/capabilities/multi-agent-analysis`
+- **Spec to Design** at `/capabilities/spec-to-design` (renamed from "Requirements to Figma" via popup, locked option `Spec to Design`)
+
+Both have full slideshow content (Overview, agents/pipeline, demo placeholder, FAQ). Sidebar's AI Capabilities group now has three children.
+
+### Developer playbook
+
+Created `CONTRIBUTING.md` (root) and three docs under `docs/`:
+
+- `design-system.md` — brand tokens, typography scale, component classes, motion modes, accessibility floor.
+- `data-model.md` — collections, types, env prefix invariant, security rules, Storage layout.
+- `recipes.md` — step-by-step playbooks for the most common changes (add a capability, add a video, add FAQs, modify brand colours, run emulators, set up an admin user).
+
+Updated `CLAUDE.md` to reference these and codify three additional hard invariants: capability pages are slideshows (#3), Storage uses canonical paths via `path.*` helpers (#5), animation respects `prefers-reduced-motion` (#6).
+
+Multi-dev guidance: every meaningful pattern should be encoded in `CLAUDE.md` (invariants), the docs (patterns / schemas / recipes), or the decisions log (rationale). If a future Claude Code session can't reconstruct your reasoning by reading those, the docs need updating.
+
+---
+
 ## 2026-04-29 — Visual upgrade to phoenix-dx.com fidelity
 
 ### Brand-faithful dark theme

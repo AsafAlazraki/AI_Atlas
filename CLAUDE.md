@@ -1,90 +1,98 @@
 # PDX AI Atlas — Claude Code project context
 
-This file is auto-loaded when Claude Code opens this folder. Read it first before exploring.
+This file is auto-loaded when Claude Code opens this folder. **Read it first** before exploring or editing.
+
+For deeper specifics, see:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md) — how to contribute, branch model, PR process
+- [docs/design-system.md](docs/design-system.md) — brand, typography, components, motion
+- [docs/data-model.md](docs/data-model.md) — Firestore schemas, security rules, Storage layout
+- [docs/recipes.md](docs/recipes.md) — step-by-step playbooks for common changes
+- [docs/decisions.md](docs/decisions.md) — append-only log of architectural decisions
 
 ## What this is
 
-A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Single-page web app, intended to be hosted on Firebase and visited by stakeholders.
+A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Customer-facing single-page web app — every screen will be shown to a prospect at some point. Visual polish is a feature, not an afterthought.
 
 ## Stack at a glance
 
 - React 19 + Vite 6 + TypeScript 5
-- Tailwind CSS 3 — **dark theme** matching phoenix-dx.com. Three palettes:
-  `phoenix.*` (red, brand), `midnight.*` (navy surfaces, page bg = `midnight-950`),
-  `azure.*` (light-blue accent — used for highlighted phrases like the
-  "software development" treatment on phoenix-dx.com).
+- Tailwind CSS 3, **dark theme only** matching phoenix-dx.com. Three palettes: `phoenix.*` (red brand), `midnight.*` (navy surfaces), `azure.*` (light-blue accent).
 - React Router v7 (library mode, `BrowserRouter`)
-- Firebase Web SDK: Auth + Firestore (Hosting pending — admin is enabling it)
-- **GSAP + @gsap/react** for entrance animations (`useEntrance` hook applies a
-  staggered fade-up to any `.gsap-fade` element inside the page scope)
-- Heroicons, clsx
-- Brand assets: `public/phoenixdx-wordmark.png` (full logo, dark-bg-ready) and
-  `public/phoenixdx-icon.jpg` (square icon — also the favicon)
+- Firebase Web SDK: Auth + Firestore + Storage (Hosting pending — admin enabling it)
+- **GSAP + @gsap/react** for animation (see Motion below)
+- Heroicons (`24/outline` body, `20/solid` chevrons), clsx
+- Brand assets: `public/phoenixdx-wordmark.png`, `public/phoenixdx-icon.jpg`
 
 ## Hard invariants — do not break these
 
 ### 1. Never read or write Firestore directly
 
-All Firestore access **must** go through `src/lib/firestore.ts` (`col()` / `docRef()`). These prepend `VITE_FIRESTORE_PREFIX` (e.g. `dev_`, `test_`, `prod_`) to every collection name so the build uses the correct env's data set.
+All Firestore access must go through `src/lib/firestore.ts` (`col()` / `docRef()`). These prepend `VITE_FIRESTORE_PREFIX` (`dev_`, `test_`, `prod_`) so the build uses the correct env's data set.
 
-Wrong:
 ```ts
-import { collection } from 'firebase/firestore';
-import { db } from './lib/firebase';
-collection(db, 'capabilities');   // hits the un-prefixed collection
-```
+// WRONG — bypasses env isolation
+collection(db, 'capabilities');
 
-Right:
-```ts
+// RIGHT
 import { col } from './lib/firestore';
-col('capabilities');              // resolves to dev_capabilities / test_capabilities / prod_capabilities
+col<Capability>('capabilities');
 ```
 
 ### 2. Branch model is dev / test / prod — no `main`
 
-Three long-lived branches. Working branches (`feature/*`, `fix/*`, `chore/*`) are cut from `dev`. Promotion is **dev → test → prod**, never skipping a stage. Hot-fixes start on `fix/*` cut from `prod`, then merge back into `prod`, `test`, `dev` to keep history aligned.
+Three long-lived branches. Working branches (`feature/*`, `fix/*`, `chore/*`) are cut from `dev`. Promotion is **dev → test → prod**, never skipping a stage. `dev` is the GitHub default.
 
-`dev` is intended to be the GitHub default branch.
+Never commit directly to `dev`, `test`, or `prod`. Use PRs.
 
-Never commit directly to `dev`, `test`, or `prod` once branch protection is on (it isn't yet — but treat it as if it is). Use PRs.
+### 3. AI Capability pages are slideshows — always
 
-### 3. Don't bypass the env layer
+Every capability page uses `<Slideshow>` from `src/components/Slideshow.tsx`. Stages compose `<ContentStage>` / `<VideoStage>` / `<FAQStage>` building blocks. The standard stage order is **Overview → How it works → In action → Demo video → FAQ**.
 
-`src/lib/env.ts` is the single source of truth for `appEnv` and `firestorePrefix`. Read from it, don't read `import.meta.env.VITE_*` directly elsewhere unless you're adding a new variable to that file.
+Don't write a one-off page layout for a capability. If a capability needs a layout the slideshow can't provide, extend the slideshow primitives — don't fork the pattern.
+
+### 4. Don't bypass the env layer
+
+`src/lib/env.ts` is the single source of truth for `appEnv` and `firestorePrefix`. Read from it; don't read `import.meta.env.VITE_*` directly elsewhere unless you're adding a new variable to that file.
+
+### 5. Storage media uses canonical paths
+
+Use the `path` helpers from `src/lib/storage.ts` — never hand-build storage paths. Canonical layout is `capabilities/<id>/videos|posters|thumbs/<filename>`.
+
+### 6. Animation respects `prefers-reduced-motion`
+
+All ambient and entrance animation must check `window.matchMedia('(prefers-reduced-motion: reduce)').matches` and bail. The existing `useEntrance`, `AnimatedBackground`, `CyclingText`, and `PhoenixVisual` already do this — copy the pattern.
 
 ## Current state
 
-- ✅ Dark-themed dashboard matching phoenix-dx.com brand aesthetic. Real PhoenixDX logos in place (`public/phoenixdx-wordmark.png`, `public/phoenixdx-icon.jpg`).
-- ✅ Sidebar with expandable nav groups (AI Capabilities is a group), Settings pinned to the bottom.
-- ✅ Pages: Dashboard, Capabilities (showcase/overview), Capabilities → Rovo (flagship demo page), Settings.
-- ✅ GSAP entrance animations on every page via `useEntrance` hook + `.gsap-fade` class.
+- ✅ Dark-themed, customer-grade UI matching phoenix-dx.com aesthetic.
+- ✅ Sidebar with expandable AI Capabilities group, Settings pinned to bottom.
+- ✅ Pages: Dashboard, Capabilities (catalog), Rovo, Multi Agent Analysis, Spec to Design, Settings.
+- ✅ Slideshow pattern in place — every capability page is a stepped slideshow ending with Demo Video + FAQ.
+- ✅ Continuous ambient animation: flowing wireframe `AnimatedBackground` (global) + `PhoenixVisual` orbital particles (Dashboard).
+- ✅ Cycling typewriter hero text on Dashboard.
 - ✅ Build passes (`npm run build`).
-- ✅ Dev server runs (`npm run dev`).
-- ✅ Firebase SDK wired but **not initialized with real config** — `.env.local` is missing.
-- ✅ Three local branches at the same initial commit: `dev`, `test`, `prod`.
-- ⏳ **No git remote configured.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. First push attempt failed with 403 because the AsafAlazraki account doesn't have write access to the Phoenix-DX org. Will be pushed from a device whose credentials have access.
+- ✅ Firebase SDK wired (Auth, Firestore, Storage). `.env.local` is missing — needs real config to actually talk to Firebase.
+- ✅ Security rules drafted (`firestore.rules`, `storage.rules`) — public reads, admin-only writes via `role: "admin"` custom claim.
+- ✅ Three local branches at the same commit: `dev`, `test`, `prod`.
+- ⏳ **No git remote.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. Initial push 403'd — `AsafAlazraki` lacks write access to the Phoenix-DX org. Will be pushed from a device with org credentials.
 - ⏳ Firebase Hosting pending admin enablement.
+- ⏳ No demo videos uploaded yet — `<VideoStage>` renders the placeholder until `storagePath` is set on each stage.
 
-## When you next pick this up — likely tasks
-
-In rough order of priority:
+## When you next pick this up
 
 1. **Push to GitHub** (when on a device with org write access):
    ```bash
    git remote add origin https://github.com/Phoenix-DX/PDX_AI_Atlas.git
-   git push -u origin dev      # push first so it becomes default
+   git push -u origin dev    # push first so it becomes default
    git push -u origin test
    git push -u origin prod
    ```
-   Then on GitHub: confirm `dev` is the default branch, add branch protection to all three (require PR + 1 approval + status checks; no force-push, no direct push).
-
-2. **Wire Firebase env vars.** Get the web-app config from Firebase Console → Project Settings, populate `.env.local` from `.env.example`. Verify auth and a Firestore read work.
-
-3. **Add a sign-in screen.** Firebase Auth is already imported but no UI yet.
-
-4. **Populate seed data** in Firestore for `dev_capabilities` and `dev_demos` so the placeholder pages render real content.
-
-5. **Set up CI/CD** when Firebase Hosting is available: GitHub Action that builds and deploys to the matching Firebase Hosting site on every push to `dev` / `test` / `prod`, injecting the right `VITE_*` env vars at build time.
+2. **Wire Firebase env vars** — populate `.env.local` from `.env.example` with real Firebase web config.
+3. **Upload first demo videos** — see [recipes.md](docs/recipes.md#add-a-demo-video-to-a-capability).
+4. **Add a sign-in screen** — Firebase Auth wired but no UI yet.
+5. **Populate seed Firestore data** for `dev_capabilities`, `dev_videos`, `dev_faqs` so the catalog can read live data instead of relying on hardcoded nav entries.
+6. **Set up CI/CD** when Hosting is enabled — GitHub Action per branch, env-aware build.
 
 ## Common commands
 
@@ -98,52 +106,107 @@ npm run typecheck   # tsc -b --noEmit
 ## Where things live
 
 ```
-src/
-├── App.tsx                     Routes (/, /capabilities, /capabilities/rovo, /settings)
-├── main.tsx                    React root + BrowserRouter
-├── index.css                   Tailwind directives + base layer + component classes
-├── components/
-│   ├── DashboardLayout.tsx     Shell — owns sidebar collapsed state (persisted to localStorage as 'pdx-sidebar-collapsed')
-│   ├── Sidebar.tsx             Collapsible (desktop) / drawer (mobile). Supports NavLeaf + NavGroup (with sub-items + auto-expand). Brand wordmark or icon based on collapsed state.
-│   └── Topbar.tsx              Sticky header with env badge + collapse toggle
-├── pages/
-│   ├── Dashboard.tsx           Hero + stat cards + capability CTA panel
-│   ├── Capabilities.tsx        Overview/showcase — links to each sub-page; "On the roadmap" section for future capabilities
-│   ├── capabilities/
-│   │   └── Rovo.tsx            Atlassian Rovo capability page — hero, feature grid, SDLC use cases, CTA
-│   └── Settings.tsx            Runtime config display
-└── lib/
-    ├── env.ts                  Single source of truth for env vars
-    ├── firebase.ts             Initialises Firebase app, auth, db
-    ├── firestore.ts            col() + docRef() — env-prefixed wrappers
-    ├── nav.ts                  NavLeaf + NavGroup types; primaryNav, footerNav, allLeaves, capabilityLeaves exports
-    └── useEntrance.ts          GSAP hook — apply `.gsap-fade` to elements inside a page-scoped ref
+PDX_AI_ATLAS/
+├── CLAUDE.md                         You are here
+├── README.md                         Project overview, branch strategy diagram
+├── CONTRIBUTING.md                   Contribution playbook
+├── firebase.json                     Firestore + Storage + Hosting + Emulator config
+├── firestore.rules                   Public-read / admin-write rules
+├── firestore.indexes.json            Firestore composite indexes (currently empty)
+├── storage.rules                     Public-read / admin-write rules + 500 MB cap
+├── .firebaserc.example               Project alias template
+├── .env.example                      VITE_* template (Firebase web config + env prefix)
+├── docs/
+│   ├── design-system.md              Brand, typography, components, motion
+│   ├── data-model.md                 Firestore schemas, security model, Storage layout
+│   ├── recipes.md                    Step-by-step playbooks
+│   └── decisions.md                  Append-only architectural log
+├── public/
+│   ├── phoenixdx-wordmark.png        Full horizontal logo (dark-bg-ready)
+│   └── phoenixdx-icon.jpg            Square icon (favicon + collapsed sidebar + dashboard centre)
+└── src/
+    ├── App.tsx                       Routes
+    ├── main.tsx                      React root + BrowserRouter
+    ├── index.css                     Tailwind directives + base layer + component classes
+    ├── components/
+    │   ├── AnimatedBackground.tsx    Global flowing wireframe SVG (mounted in DashboardLayout)
+    │   ├── CyclingText.tsx           Typewriter cycle through phrases
+    │   ├── DashboardLayout.tsx       Shell: AnimatedBackground + Sidebar + Topbar + Outlet
+    │   ├── PhoenixVisual.tsx         Animated brand visual for Dashboard (orbital particles)
+    │   ├── Sidebar.tsx               Collapsible/drawer; supports NavLeaf + NavGroup w/ sub-items
+    │   ├── Slideshow.tsx             Capability slideshow orchestrator (hero + stepper + stage + footer)
+    │   ├── Topbar.tsx                Sticky header with env badge + collapse toggle
+    │   └── slideshow/
+    │       ├── ContentStage.tsx      Reusable shell for content stages + FeatureGrid + FeatureCard
+    │       ├── FAQStage.tsx          Accordion FAQ stage
+    │       ├── StageNav.tsx          Stepper progress nav (clickable segments)
+    │       └── VideoStage.tsx        Firebase Storage video player + placeholder
+    ├── pages/
+    │   ├── Dashboard.tsx             Two-column hero (left) + PhoenixVisual (right), no scroll
+    │   ├── Capabilities.tsx          Catalog overview — auto-renders cards from capabilityLeaves
+    │   ├── Settings.tsx              Runtime config display
+    │   └── capabilities/
+    │       ├── Rovo.tsx              Atlassian Rovo
+    │       ├── MultiAgentAnalysis.tsx Multi-agent codebase analysis
+    │       └── SpecToDesign.tsx      Spec → Figma designs pipeline
+    ├── lib/
+    │   ├── env.ts                    appEnv + firestorePrefix (read VITE_* once)
+    │   ├── firebase.ts               app, auth, db, storage initialisation
+    │   ├── firestore.ts              col() + docRef() — env-prefixed wrappers
+    │   ├── nav.ts                    NavLeaf + NavGroup; primaryNav, footerNav, capabilityLeaves
+    │   ├── storage.ts                resolveVideoUrl(), uploadFile(), path.* helpers
+    │   └── useEntrance.ts            GSAP hook — staggered fade-up on `.gsap-fade` elements
+    └── types/
+        ├── capability.ts             Capability Firestore type
+        ├── faq.ts                    FAQ Firestore type
+        ├── slideshow.ts              SlideshowStage + CapabilityHeroData
+        └── video.ts                  Video Firestore type
 ```
 
-### Adding a new AI capability page
+## Page composition pattern
 
-1. Create `src/pages/capabilities/<Name>.tsx`. Copy `Rovo.tsx` as a starting point (Hero + FeatureGrid + SDLC + CTA).
-2. Add the route under the `capabilities` parent in `src/App.tsx`:
-   `<Route path="<slug>" element={<Name />} />`
-3. Add a `NavLeaf` to the `AI Capabilities` group's `children` array in `src/lib/nav.ts` — set a `description` (it shows on the Capabilities overview page card).
-4. Use Heroicons for the leaf `icon`. For consistency, keep to `24/outline`.
-5. Pages should follow the established hero pattern: kicker label (uppercase tracking-wide phoenix-400) → display heading → subtitle (with optional `accent-phrase` span on highlighted words) → CTA buttons.
+Every page should look like this at the top level:
+
+```tsx
+import { useRef } from 'react';
+import { useEntrance } from '../lib/useEntrance';
+
+export default function MyPage() {
+  const scope = useRef<HTMLDivElement>(null);
+  useEntrance(scope);
+
+  return (
+    <div ref={scope} className="space-y-10">
+      <header>
+        <p className="gsap-fade text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">
+          KICKER
+        </p>
+        <h1 className="gsap-fade mt-3 text-display-md sm:text-display-lg">
+          Title <span className="accent-phrase">accent</span>
+        </h1>
+        <p className="gsap-fade mt-4 max-w-2xl text-midnight-300">Tagline.</p>
+      </header>
+      {/* Sections, each with .gsap-fade on the element to animate */}
+    </div>
+  );
+}
+```
+
+Capability pages skip this and use `<Slideshow>` instead — see [recipes.md](docs/recipes.md#add-a-new-ai-capability).
 
 ## Style notes for new code
 
-- **Dark theme only.** Page bg is `midnight-950`; text default is white. Don't reach for light Tailwind colors (`bg-white`, `text-gray-900`) — they'll break the visual language.
+- **Dark theme only** — page bg `midnight-950`, text white. No `bg-white`, no `text-gray-*`.
 - **TypeScript strict.** No `any`.
-- **Use `clsx`** for conditional class names, not template strings.
-- **Tailwind tokens to prefer:**
-  - `phoenix-*` for brand red (CTAs, active state, accent glows).
-  - `midnight-*` for surfaces and muted text. Common: `midnight-950` page, `midnight-800` cards, `midnight-700` borders, `midnight-300` muted text.
-  - `azure-300` for the light-blue accent on highlighted phrases. Use the `accent-phrase` component class.
-- **Component classes** in `index.css`: `card`, `card-glow` (with subtle corner-glow gradient), `btn-primary` (phoenix-red pill), `btn-ghost` (outlined), `accent-phrase`, `hairline`.
-- **Heroicons 24/outline** style throughout for visual consistency. Use `20/solid` only for tight chevrons.
-- **Animation pattern:** every page has a top-level scope ref + `useEntrance(scope)`. Add `gsap-fade` to elements you want in the entrance stagger. Hovered/interactive animations use Tailwind transitions, not GSAP.
-- **Hero pattern** for any new page: kicker (`text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400`) → display heading (`text-display-md sm:text-display-lg`) → subtitle (`text-midnight-300`, with optional `accent-phrase` highlight) → CTA buttons.
-- Pages are self-contained — keep cross-page concerns in `lib/` or `components/`.
+- **`clsx`** for conditional class names — not template strings.
+- **Component classes** in `index.css`: `card`, `card-glow`, `btn-primary`, `btn-ghost`, `accent-phrase`, `hairline`. Prefer these over re-rolling.
+- **Animation modes:**
+  - *Entrance* — `useEntrance` + `.gsap-fade` class (one-shot, on mount).
+  - *Ambient* — `AnimatedBackground`, `PhoenixVisual` (continuous, GSAP-driven, `prefers-reduced-motion`-aware).
+  - *Interaction* — Tailwind `hover:*` / `transition-*` only. Don't use GSAP for hover.
+- **Heroicons 24/outline** by default; `20/solid` for chevrons / status dots.
+- **No `any`.** No light-mode classes. No direct `collection(db, …)`. No hand-built storage paths. These are review blockers.
 
 ## Decisions log
 
-See [docs/decisions.md](./docs/decisions.md).
+See [docs/decisions.md](./docs/decisions.md). Append every architectural decision worth recording — most-recent at top.

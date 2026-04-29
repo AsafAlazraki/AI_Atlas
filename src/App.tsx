@@ -3,6 +3,8 @@ import DashboardLayout from './components/DashboardLayout';
 import Dashboard from './pages/Dashboard';
 import Capabilities from './pages/Capabilities';
 import Rovo from './pages/capabilities/Rovo';
+import MultiAgentAnalysis from './pages/capabilities/MultiAgentAnalysis';
+import SpecToDesign from './pages/capabilities/SpecToDesign';
 import Settings from './pages/Settings';
 
 export default function App() {
@@ -13,6 +15,8 @@ export default function App() {
         <Route path="capabilities">
           <Route index element={<Capabilities />} />
           <Route path="rovo" element={<Rovo />} />
+          <Route path="multi-agent-analysis" element={<MultiAgentAnalysis />} />
+          <Route path="spec-to-design" element={<SpecToDesign />} />
         </Route>
         <Route path="settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" replace />} />

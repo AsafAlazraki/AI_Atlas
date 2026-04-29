@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// PDX AI Atlas — Firebase Storage security rules.
+//
+// Model: public reads on capability media so the Atlas can stream demo
+// videos to anonymous visitors. Writes are admin-only via Firebase Auth
+// custom claim `role: "admin"`.
+//
+// File-size cap on upload prevents accidental gigabyte uploads.
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.role == 'admin';
+    }
+
+    // capabilities/{capabilityId}/{type}/{filename}
+    match /capabilities/{capabilityId}/{path=**} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && request.resource.size < 500 * 1024 * 1024; // 500 MB ceiling
+    }
+
+    // Default-deny on any other path.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

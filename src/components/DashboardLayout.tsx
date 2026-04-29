@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import Sidebar from './Sidebar';
 import Topbar from './Topbar';
+import AnimatedBackground from './AnimatedBackground';
 
 const COLLAPSED_KEY = 'pdx-sidebar-collapsed';
 
@@ -23,7 +24,9 @@ export default function DashboardLayout() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-full">
+    <div className="relative min-h-full">
+      <AnimatedBackground />
+
       <Sidebar
         collapsed={collapsed}
         mobileOpen={mobileOpen}

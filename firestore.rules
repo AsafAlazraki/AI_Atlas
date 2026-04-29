@@ -1,0 +1,33 @@
+rules_version = '2';
+
+// PDX AI Atlas — Firestore security rules.
+//
+// Model: public reads on everything (the Atlas is a customer-facing
+// showcase). Writes are admin-only via Firebase Auth custom claim
+// `role: "admin"`, set on the user record by an admin tool.
+//
+// All collections use the env prefix pattern (`dev_`, `test_`, `prod_`).
+// We match a single segment `{prefix}_{name}` so all three environments
+// share these rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.role == 'admin';
+    }
+
+    // capabilities — the catalog entries.
+    match /{collection}/{docId} {
+      // Allow public reads for any collection that ends with one of the known suffixes.
+      // (capabilities | videos | faqs)
+      allow read: if collection.matches('(dev|test|prod)_(capabilities|videos|faqs)');
+      allow write: if collection.matches('(dev|test|prod)_(capabilities|videos|faqs)') && isAdmin();
+    }
+
+    // Lock everything else by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -3,6 +3,8 @@ import {
   SparklesIcon,
   RocketLaunchIcon,
   Cog6ToothIcon,
+  UsersIcon,
+  PaintBrushIcon,
 } from '@heroicons/react/24/outline';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -45,6 +47,22 @@ export const primaryNav: NavEntry[] = [
         description:
           'AI agents and enterprise search powered by your knowledge — across the SDLC.',
       },
+      {
+        type: 'leaf',
+        label: 'Multi Agent Analysis',
+        to: '/capabilities/multi-agent-analysis',
+        icon: UsersIcon,
+        description:
+          'A team of specialised AI agents that analyse codebases, requirements, and architecture together — each agent owning a domain.',
+      },
+      {
+        type: 'leaf',
+        label: 'Spec to Design',
+        to: '/capabilities/spec-to-design',
+        icon: PaintBrushIcon,
+        description:
+          'Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes.',
+      },
     ],
   },
 ];
@@ -61,7 +79,6 @@ export const allLeaves: NavLeaf[] = [
 ];
 
 /** All capability leaves — used to render the Capabilities overview. */
-export const capabilityLeaves: NavLeaf[] =
-  primaryNav
-    .filter((e): e is NavGroup => e.type === 'group' && e.basePath === '/capabilities')
-    .flatMap((g) => g.children);
+export const capabilityLeaves: NavLeaf[] = primaryNav
+  .filter((e): e is NavGroup => e.type === 'group' && e.basePath === '/capabilities')
+  .flatMap((g) => g.children);

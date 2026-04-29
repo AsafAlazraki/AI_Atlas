@@ -1,185 +1,196 @@
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import {
-  ArrowRightIcon,
   MagnifyingGlassIcon,
   CpuChipIcon,
   BoltIcon,
   Squares2X2Icon,
+  ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import { useEntrance } from '../../lib/useEntrance';
+import { Link } from 'react-router-dom';
+import Slideshow from '../../components/Slideshow';
+import ContentStage, {
+  FeatureGrid,
+  FeatureCard,
+} from '../../components/slideshow/ContentStage';
+import VideoStage from '../../components/slideshow/VideoStage';
+import FAQStage, { type FAQItem } from '../../components/slideshow/FAQStage';
+import type { CapabilityHeroData, SlideshowStage } from '../../types/slideshow';
 
-const features = [
+const hero: CapabilityHeroData = {
+  kicker: 'AI Capabilities · Atlassian',
+  title: 'Rovo —',
+  titleAccent: 'AI grounded in your knowledge',
+  tagline:
+    "Rovo connects to the tools your teams already use — Jira, Confluence, GitHub, Slack and beyond — to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC.",
+};
+
+const sdlcStages = [
+  { stage: 'Discovery', use: 'Surface prior decisions and similar work across Confluence and Jira.' },
+  { stage: 'Design', use: 'Generate ADRs and architecture summaries from threads and docs.' },
+  { stage: 'Build', use: 'Draft PR descriptions, summarise diffs, and answer questions about a repo.' },
+  { stage: 'Test', use: 'Triage incoming bugs, suggest reproduction steps, and link related tickets.' },
+  { stage: 'Deploy', use: 'Auto-compose release notes from merged PRs and Jira tickets.' },
+  { stage: 'Operate', use: 'Triage incidents and recall the last time something similar happened.' },
+];
+
+const faqs: FAQItem[] = [
   {
-    icon: MagnifyingGlassIcon,
-    title: 'Enterprise search',
-    body:
-      "Find anything across Jira, Confluence, GitHub, Slack, Drive, SharePoint and your own tools — with answers grounded in your team's actual work.",
+    id: 'sources',
+    question: 'What does Rovo connect to?',
+    answer:
+      'Out of the box: Atlassian (Jira, Confluence, Bitbucket), GitHub, Slack, Microsoft (Teams, SharePoint, OneDrive), Google Workspace (Drive, Gmail), Figma, Notion, and more. Custom connectors can be built for internal systems.',
   },
   {
-    icon: CpuChipIcon,
-    title: 'Rovo Agents',
-    body:
-      'Skill-based AI teammates that take initiative — drafting tickets, summarising standups, reviewing PRs, generating release notes.',
+    id: 'permissions',
+    question: 'How does Rovo handle permissions?',
+    answer:
+      'Rovo respects every source system\'s ACLs. Users only see answers and references they already have permission to read in the underlying tool — there is no permission elevation. PhoenixDX hardens this further during deployment.',
   },
   {
-    icon: BoltIcon,
-    title: 'Workflow automation',
-    body:
-      'Trigger agents on Jira transitions, schedule recurring summaries, and chain tools together with natural-language prompts.',
+    id: 'agents',
+    question: 'How are Rovo Agents different from chat?',
+    answer:
+      'Agents are skill-based teammates that take initiative on a defined job — drafting tickets, summarising standups, reviewing PRs, generating release notes. Chat is reactive; agents are proactive and run on triggers or schedules.',
   },
   {
-    icon: Squares2X2Icon,
-    title: 'Built on your knowledge',
-    body:
-      'Permission-aware retrieval, fine-grained sources, and audit trails — so every answer is traceable and safe to act on.',
+    id: 'data',
+    question: 'Is our data used to train models?',
+    answer:
+      'No. Atlassian\'s Rovo runs on enterprise-grade LLMs and does not use customer data to train shared models. PhoenixDX validates this for each engagement against your compliance posture.',
+  },
+  {
+    id: 'rollout',
+    question: 'How does PhoenixDX help with adoption?',
+    answer:
+      'A typical engagement: discovery workshop → connector + permission setup → pilot with one team → measurable rollout plan. Most customers see strong ROI within the first 6 weeks.',
   },
 ];
 
-export default function Rovo() {
-  const scope = useRef<HTMLDivElement>(null);
-  useEntrance(scope);
-
+function Overview() {
   return (
-    <div ref={scope} className="space-y-12">
-      <Hero />
-      <FeatureGrid />
-      <SDLC />
-      <CTA />
-    </div>
-  );
-}
+    <ContentStage
+      eyebrow="What is Rovo"
+      heading="An AI assistant that knows your business"
+      subtitle="Rovo combines enterprise search, AI agents, and workflow automation — grounded in your team's actual work, not the public internet."
+    >
+      <div className="grid gap-5 md:grid-cols-3">
+        <Stat label="Connectors" value="50+" hint="Atlassian, GitHub, Slack, Microsoft, Google" />
+        <Stat label="Permission-aware" value="100%" hint="Source-system ACLs honoured for every result" />
+        <Stat label="Time saved" value="6+ hrs" hint="Per developer per week (typical PhoenixDX rollout)" />
+      </div>
 
-function Hero() {
-  return (
-    <section className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-24 h-72 w-72 rounded-full bg-phoenix-500/15 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-20 h-64 w-64 rounded-full bg-azure-300/10 blur-3xl"
-      />
-
-      <p className="gsap-fade text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">
-        AI Capabilities · Atlassian
-      </p>
-      <h1 className="gsap-fade mt-3 text-display-md sm:text-display-lg">
-        Rovo
-      </h1>
-      <p className="gsap-fade mt-3 max-w-3xl text-xl text-midnight-200 sm:text-2xl">
-        AI agents and enterprise search,{' '}
-        <span className="accent-phrase">grounded in your knowledge</span>.
-      </p>
-      <p className="gsap-fade mt-5 max-w-2xl text-base text-midnight-300">
-        Rovo connects to the tools your teams already use — Jira, Confluence,
-        GitHub, Slack, and beyond — to find, learn, and act on the
-        work happening across your organisation. PhoenixDX deploys Rovo as a
-        productivity multiplier across every stage of the SDLC.
-      </p>
-      <div className="gsap-fade mt-8 flex flex-wrap items-center gap-3">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
         <a
           href="https://www.atlassian.com/software/rovo"
           target="_blank"
           rel="noreferrer noopener"
           className="btn-primary"
         >
-          Learn about Rovo
+          Atlassian Rovo product page
           <ArrowRightIcon className="h-4 w-4" />
         </a>
         <Link to="/capabilities" className="btn-ghost">
           Back to capabilities
         </Link>
       </div>
-    </section>
+    </ContentStage>
   );
 }
 
-function FeatureGrid() {
+function Stat({ label, value, hint }: { label: string; value: string; hint: string }) {
   return (
-    <section>
-      <div className="gsap-fade flex items-center gap-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-midnight-300">
-          What Rovo does
-        </h2>
-        <span className="hairline flex-1" />
+    <div className="rounded-2xl border border-midnight-700/60 bg-midnight-900/40 p-5">
+      <div className="text-xs font-semibold uppercase tracking-wider text-midnight-400">
+        {label}
       </div>
-      <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {features.map((f) => (
-          <article
-            key={f.title}
-            className="card-glow gsap-fade group relative overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-phoenix-500/30 hover:shadow-lift"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-azure-300/10 text-azure-300 ring-1 ring-inset ring-azure-300/30 transition-all duration-300 group-hover:bg-azure-300/20">
-              <f.icon className="h-6 w-6" aria-hidden="true" />
-            </div>
-            <h3 className="mt-4 text-lg font-semibold text-white">{f.title}</h3>
-            <p className="mt-2 text-sm text-midnight-300">{f.body}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+      <div className="mt-1 text-3xl font-semibold tracking-tight text-white">{value}</div>
+      <div className="mt-1 text-xs text-midnight-300">{hint}</div>
+    </div>
   );
 }
 
-function SDLC() {
-  const stages = [
-    { stage: 'Discovery', use: 'Surface prior decisions and similar work across Confluence and Jira.' },
-    { stage: 'Design', use: 'Generate ADRs and architecture summaries from threads and docs.' },
-    { stage: 'Build', use: 'Draft PR descriptions, summarise diffs, and answer questions about a repo.' },
-    { stage: 'Test', use: 'Triage incoming bugs, suggest reproduction steps, and link related tickets.' },
-    { stage: 'Deploy', use: 'Auto-compose release notes from merged PRs and Jira tickets.' },
-    { stage: 'Operate', use: 'Triage incidents and recall the last time something similar happened.' },
-  ];
+function HowItWorks() {
   return (
-    <section>
-      <div className="gsap-fade flex items-center gap-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-midnight-300">
-          Across the SDLC
-        </h2>
-        <span className="hairline flex-1" />
-      </div>
-      <div className="card mt-4 divide-y divide-midnight-800 overflow-hidden">
-        {stages.map((s) => (
+    <ContentStage
+      eyebrow="Capabilities"
+      heading="What Rovo does"
+      subtitle="Four modes, one connected experience."
+    >
+      <FeatureGrid>
+        <FeatureCard
+          icon={MagnifyingGlassIcon}
+          heading="Enterprise search"
+          body="Find anything across the tools your teams already use — with answers grounded in your team's actual work."
+        />
+        <FeatureCard
+          icon={CpuChipIcon}
+          heading="Rovo Agents"
+          body="Skill-based AI teammates that take initiative — drafting tickets, summarising standups, reviewing PRs, generating release notes."
+        />
+        <FeatureCard
+          icon={BoltIcon}
+          heading="Workflow automation"
+          body="Trigger agents on Jira transitions, schedule recurring summaries, and chain tools together with natural-language prompts."
+        />
+        <FeatureCard
+          icon={Squares2X2Icon}
+          heading="Built on your knowledge"
+          body="Permission-aware retrieval, fine-grained sources, and audit trails — every answer is traceable and safe to act on."
+        />
+      </FeatureGrid>
+    </ContentStage>
+  );
+}
+
+function AcrossTheSDLC() {
+  return (
+    <ContentStage
+      eyebrow="Use cases"
+      heading="Rovo across the SDLC"
+      subtitle="One assistant, six stages of value. PhoenixDX maps Rovo to your team's existing rituals."
+    >
+      <div className="overflow-hidden rounded-2xl border border-midnight-700/60">
+        {sdlcStages.map((s, i) => (
           <div
             key={s.stage}
-            className="gsap-fade flex flex-col gap-1 p-5 transition-colors hover:bg-midnight-800/30 sm:flex-row sm:items-center sm:gap-6"
+            className={`flex flex-col gap-1 p-5 transition-colors hover:bg-midnight-800/30 sm:flex-row sm:items-center sm:gap-6 ${
+              i > 0 ? 'border-t border-midnight-800/80' : ''
+            }`}
           >
             <div className="w-32 flex-shrink-0 text-sm font-semibold uppercase tracking-wider text-phoenix-400">
               {s.stage}
             </div>
-            <div className="text-sm text-midnight-200">{s.use}</div>
+            <div className="text-sm text-midnight-200 sm:text-base">{s.use}</div>
           </div>
         ))}
       </div>
-    </section>
+    </ContentStage>
   );
 }
 
-function CTA() {
-  return (
-    <section className="card-glow gsap-fade relative overflow-hidden p-8 sm:p-10">
-      <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Ready to put Rovo to work?
-          </h2>
-          <p className="mt-2 max-w-2xl text-midnight-300">
-            PhoenixDX runs deployment workshops to get Rovo connected, secured,
-            and adopted across your teams in weeks — not quarters.
-          </p>
-        </div>
-        <a
-          href="https://phoenix-dx.com"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="btn-primary whitespace-nowrap"
-        >
-          Talk to PhoenixDX
-          <ArrowRightIcon className="h-4 w-4" />
-        </a>
-      </div>
-    </section>
-  );
+const stages: SlideshowStage[] = [
+  { id: 'overview', label: 'Overview', content: <Overview /> },
+  { id: 'features', label: 'How it works', content: <HowItWorks /> },
+  { id: 'sdlc', label: 'Across the SDLC', content: <AcrossTheSDLC /> },
+  {
+    id: 'demo',
+    label: 'Demo video',
+    content: (
+      <VideoStage
+        heading="Rovo in 2 minutes"
+        description="A quick walkthrough of Rovo answering questions across Jira, Confluence, and GitHub."
+        // When a video is uploaded, set storagePath here:
+        storagePath={undefined /* path.capabilityVideo('rovo', 'intro.mp4') */}
+        durationLabel="2:14"
+      />
+    ),
+  },
+  {
+    id: 'faq',
+    label: 'FAQ',
+    content: <FAQStage faqs={faqs} />,
+  },
+];
+
+export default function Rovo() {
+  return <Slideshow hero={hero} stages={stages} />;
 }
