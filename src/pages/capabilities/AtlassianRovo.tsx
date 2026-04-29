@@ -3,25 +3,19 @@ import {
   CpuChipIcon,
   BoltIcon,
   Squares2X2Icon,
-  ArrowRightIcon,
 } from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
 import Slideshow from '../../components/Slideshow';
+import HeroStage, {
+  HeroStats,
+  HeroStat,
+} from '../../components/slideshow/HeroStage';
 import ContentStage, {
   FeatureGrid,
   FeatureCard,
 } from '../../components/slideshow/ContentStage';
 import VideoStage from '../../components/slideshow/VideoStage';
 import FAQStage, { type FAQItem } from '../../components/slideshow/FAQStage';
-import type { CapabilityHeroData, SlideshowStage } from '../../types/slideshow';
-
-const hero: CapabilityHeroData = {
-  kicker: 'AI Capabilities · Atlassian',
-  title: 'Rovo —',
-  titleAccent: 'AI grounded in your knowledge',
-  tagline:
-    "Rovo connects to the tools your teams already use — Jira, Confluence, GitHub, Slack and beyond — to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC.",
-};
+import type { SlideshowStage } from '../../types/slideshow';
 
 const sdlcStages = [
   { stage: 'Discovery', use: 'Surface prior decisions and similar work across Confluence and Jira.' },
@@ -43,7 +37,7 @@ const faqs: FAQItem[] = [
     id: 'permissions',
     question: 'How does Rovo handle permissions?',
     answer:
-      'Rovo respects every source system\'s ACLs. Users only see answers and references they already have permission to read in the underlying tool — there is no permission elevation. PhoenixDX hardens this further during deployment.',
+      "Rovo respects every source system's ACLs. Users only see answers and references they already have permission to read in the underlying tool — there is no permission elevation. PhoenixDX hardens this further during deployment.",
   },
   {
     id: 'agents',
@@ -55,7 +49,7 @@ const faqs: FAQItem[] = [
     id: 'data',
     question: 'Is our data used to train models?',
     answer:
-      'No. Atlassian\'s Rovo runs on enterprise-grade LLMs and does not use customer data to train shared models. PhoenixDX validates this for each engagement against your compliance posture.',
+      "No. Atlassian's Rovo runs on enterprise-grade LLMs and does not use customer data to train shared models. PhoenixDX validates this for each engagement against your compliance posture.",
   },
   {
     id: 'rollout',
@@ -67,44 +61,30 @@ const faqs: FAQItem[] = [
 
 function Overview() {
   return (
-    <ContentStage
-      eyebrow="What is Rovo"
-      heading="An AI assistant that knows your business"
-      subtitle="Rovo combines enterprise search, AI agents, and workflow automation — grounded in your team's actual work, not the public internet."
+    <HeroStage
+      kicker="AI Capabilities · Atlassian"
+      title="Atlassian Rovo —"
+      titleAccent="AI grounded in your knowledge"
+      tagline="Rovo connects to the tools your teams already use — Jira, Confluence, GitHub, Slack and beyond — to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC."
     >
-      <div className="grid gap-5 md:grid-cols-3">
-        <Stat label="Connectors" value="50+" hint="Atlassian, GitHub, Slack, Microsoft, Google" />
-        <Stat label="Permission-aware" value="100%" hint="Source-system ACLs honoured for every result" />
-        <Stat label="Time saved" value="6+ hrs" hint="Per developer per week (typical PhoenixDX rollout)" />
-      </div>
-
-      <div className="mt-8 flex flex-wrap items-center gap-3">
-        <a
-          href="https://www.atlassian.com/software/rovo"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="btn-primary"
-        >
-          Atlassian Rovo product page
-          <ArrowRightIcon className="h-4 w-4" />
-        </a>
-        <Link to="/capabilities" className="btn-ghost">
-          Back to capabilities
-        </Link>
-      </div>
-    </ContentStage>
-  );
-}
-
-function Stat({ label, value, hint }: { label: string; value: string; hint: string }) {
-  return (
-    <div className="rounded-2xl border border-midnight-700/60 bg-midnight-900/40 p-5">
-      <div className="text-xs font-semibold uppercase tracking-wider text-midnight-400">
-        {label}
-      </div>
-      <div className="mt-1 text-3xl font-semibold tracking-tight text-white">{value}</div>
-      <div className="mt-1 text-xs text-midnight-300">{hint}</div>
-    </div>
+      <HeroStats>
+        <HeroStat
+          label="Connectors"
+          value="50+"
+          hint="Atlassian, GitHub, Slack, Microsoft, Google"
+        />
+        <HeroStat
+          label="Permission-aware"
+          value="100%"
+          hint="Source-system ACLs honoured for every result"
+        />
+        <HeroStat
+          label="Time saved"
+          value="6+ hrs"
+          hint="Per developer per week (typical PhoenixDX rollout)"
+        />
+      </HeroStats>
+    </HeroStage>
   );
 }
 
@@ -119,7 +99,7 @@ function HowItWorks() {
         <FeatureCard
           icon={MagnifyingGlassIcon}
           heading="Enterprise search"
-          body="Find anything across the tools your teams already use — with answers grounded in your team's actual work."
+          body="Find anything across the tools your teams already use — answers grounded in your team's actual work, not the public internet."
         />
         <FeatureCard
           icon={CpuChipIcon}
@@ -148,18 +128,16 @@ function AcrossTheSDLC() {
       heading="Rovo across the SDLC"
       subtitle="One assistant, six stages of value. PhoenixDX maps Rovo to your team's existing rituals."
     >
-      <div className="overflow-hidden rounded-2xl border border-midnight-700/60">
-        {sdlcStages.map((s, i) => (
+      <div className="grid h-full grid-cols-1 gap-2 sm:grid-cols-2">
+        {sdlcStages.map((s) => (
           <div
             key={s.stage}
-            className={`flex flex-col gap-1 p-5 transition-colors hover:bg-midnight-800/30 sm:flex-row sm:items-center sm:gap-6 ${
-              i > 0 ? 'border-t border-midnight-800/80' : ''
-            }`}
+            className="flex items-start gap-4 rounded-2xl border border-midnight-700/60 bg-midnight-900/40 p-4 transition-colors hover:border-phoenix-500/30"
           >
-            <div className="w-32 flex-shrink-0 text-sm font-semibold uppercase tracking-wider text-phoenix-400">
+            <div className="w-20 flex-shrink-0 text-xs font-semibold uppercase tracking-wider text-phoenix-400">
               {s.stage}
             </div>
-            <div className="text-sm text-midnight-200 sm:text-base">{s.use}</div>
+            <div className="text-sm text-midnight-200">{s.use}</div>
           </div>
         ))}
       </div>
@@ -169,7 +147,7 @@ function AcrossTheSDLC() {
 
 const stages: SlideshowStage[] = [
   { id: 'overview', label: 'Overview', content: <Overview /> },
-  { id: 'features', label: 'How it works', content: <HowItWorks /> },
+  { id: 'capabilities', label: 'How it works', content: <HowItWorks /> },
   { id: 'sdlc', label: 'Across the SDLC', content: <AcrossTheSDLC /> },
   {
     id: 'demo',
@@ -179,7 +157,8 @@ const stages: SlideshowStage[] = [
         heading="Rovo in 2 minutes"
         description="A quick walkthrough of Rovo answering questions across Jira, Confluence, and GitHub."
         // When a video is uploaded, set storagePath here:
-        storagePath={undefined /* path.capabilityVideo('rovo', 'intro.mp4') */}
+        // storagePath={path.capabilityVideo('rovo', 'intro.mp4')}
+        storagePath={undefined}
         durationLabel="2:14"
       />
     ),
@@ -191,6 +170,6 @@ const stages: SlideshowStage[] = [
   },
 ];
 
-export default function Rovo() {
-  return <Slideshow hero={hero} stages={stages} />;
+export default function AtlassianRovo() {
+  return <Slideshow stages={stages} />;
 }

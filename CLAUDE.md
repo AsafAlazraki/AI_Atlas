@@ -45,9 +45,17 @@ Three long-lived branches. Working branches (`feature/*`, `fix/*`, `chore/*`) ar
 
 Never commit directly to `dev`, `test`, or `prod`. Use PRs.
 
-### 3. AI Capability pages are slideshows — always
+### 3. AI Capability pages are no-scroll slideshows — always
 
-Every capability page uses `<Slideshow>` from `src/components/Slideshow.tsx`. Stages compose `<ContentStage>` / `<VideoStage>` / `<FAQStage>` building blocks. The standard stage order is **Overview → How it works → In action → Demo video → FAQ**.
+Every capability page is either:
+
+(a) A built `<Slideshow>` with stages composed of `<HeroStage>` / `<ContentStage>` / `<VideoStage>` / `<FAQStage>` (see `AtlassianRovo.tsx` for the canonical example), or
+
+(b) A `<CapabilityComingSoon>` placeholder for capabilities that haven't been written yet (every page file keeps its intended slideshow structure as a top-level comment block).
+
+The standard stage order is **Overview → How it works → In action → Demo video → FAQ**.
+
+**No scrolling.** The slideshow uses `h-[calc(100vh-8rem)]` and each stage MUST be designed to fit one viewport. If a stage doesn't fit: split it across multiple stages, drop a row, tighten copy, or move content to a smaller layout. Do not add `overflow-y-auto`.
 
 Don't write a one-off page layout for a capability. If a capability needs a layout the slideshow can't provide, extend the slideshow primitives — don't fork the pattern.
 
@@ -144,19 +152,27 @@ PDX_AI_ATLAS/
     │   ├── Sidebar.tsx               Collapsible/drawer; supports NavLeaf + NavGroup w/ sub-items
     │   ├── Slideshow.tsx             Capability slideshow orchestrator (hero + stepper + stage + footer)
     │   ├── Topbar.tsx                Sticky header with env badge + collapse toggle
+    │   ├── CapabilityComingSoon.tsx  Placeholder no-scroll layout for unbuilt capability pages
     │   └── slideshow/
-    │       ├── ContentStage.tsx      Reusable shell for content stages + FeatureGrid + FeatureCard
-    │       ├── FAQStage.tsx          Accordion FAQ stage
+    │       ├── ContentStage.tsx      Reusable shell for content stages (h-full) + FeatureGrid + FeatureCard
+    │       ├── FAQStage.tsx          Accordion FAQ stage (h-full)
+    │       ├── HeroStage.tsx         Stage 1 = intro + overview (kicker, title, accent, tagline, optional stats)
     │       ├── StageNav.tsx          Stepper progress nav (clickable segments)
-    │       └── VideoStage.tsx        Firebase Storage video player + placeholder
+    │       └── VideoStage.tsx        Firebase Storage video player + placeholder (h-full)
     ├── pages/
     │   ├── Dashboard.tsx             Two-column hero (left) + PhoenixVisual (right), no scroll
     │   ├── Capabilities.tsx          Catalog overview — auto-renders cards from capabilityLeaves
     │   ├── Settings.tsx              Runtime config display
     │   └── capabilities/
-    │       ├── Rovo.tsx              Atlassian Rovo
-    │       ├── MultiAgentAnalysis.tsx Multi-agent codebase analysis
-    │       └── SpecToDesign.tsx      Spec → Figma designs pipeline
+    │       ├── AtlassianRovo.tsx     ← BUILT EXAMPLE — full no-scroll slideshow
+    │       ├── MultiAgentAnalysis.tsx Placeholder (CapabilityComingSoon)
+    │       ├── GitHubCopilot.tsx     Placeholder (CapabilityComingSoon)
+    │       ├── CodeReview.tsx        Placeholder (CapabilityComingSoon)
+    │       ├── AutomatedTesting.tsx  Placeholder (CapabilityComingSoon)
+    │       ├── DocumentationGeneration.tsx  Placeholder (CapabilityComingSoon)
+    │       ├── SpecToDesign.tsx      Placeholder (CapabilityComingSoon)
+    │       ├── ClaudeDesign.tsx      Placeholder (CapabilityComingSoon)
+    │       └── ReleaseNotes.tsx      Placeholder (CapabilityComingSoon)
     ├── lib/
     │   ├── env.ts                    appEnv + firestorePrefix (read VITE_* once)
     │   ├── firebase.ts               app, auth, db, storage initialisation

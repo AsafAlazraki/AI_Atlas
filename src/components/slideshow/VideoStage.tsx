@@ -20,8 +20,10 @@ type Props = {
 
 /**
  * Demo-video slideshow stage. Resolves the Firebase Storage download URL
- * lazily on mount. While loading, shows a placeholder. If `storagePath`
+ * lazily on mount. While loading, shows a skeleton. If `storagePath`
  * is omitted entirely, renders the "video coming soon" placeholder.
+ *
+ * Sized to fit one viewport — header on top, video fills remaining space.
  */
 export default function VideoStage({
   heading,
@@ -65,8 +67,8 @@ export default function VideoStage({
   }, [posterPath]);
 
   return (
-    <section className="card-glow overflow-hidden p-6 sm:p-8 lg:p-10">
-      <header className="flex flex-wrap items-end justify-between gap-3">
+    <section className="card-glow flex h-full flex-col overflow-hidden p-6 sm:p-8 lg:p-10">
+      <header className="gsap-stage-fade flex flex-shrink-0 flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">
             Demo video
@@ -85,23 +87,25 @@ export default function VideoStage({
         )}
       </header>
 
-      <div className="mt-6">
-        {storagePath && src && (
-          <div className="overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-midnight-700/60">
-            <video
-              key={src}
-              controls
-              className="aspect-video w-full"
-              poster={poster ?? undefined}
-            >
-              <source src={src} type="video/mp4" />
-              Your browser does not support HTML5 video.
-            </video>
-          </div>
-        )}
-        {storagePath && !src && !error && <VideoSkeleton />}
-        {storagePath && error && <VideoError message={error} />}
-        {!storagePath && <VideoPlaceholder />}
+      <div className="gsap-stage-fade mt-6 flex flex-1 items-center overflow-hidden">
+        <div className="w-full">
+          {storagePath && src && (
+            <div className="overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-midnight-700/60">
+              <video
+                key={src}
+                controls
+                className="aspect-video w-full"
+                poster={poster ?? undefined}
+              >
+                <source src={src} type="video/mp4" />
+                Your browser does not support HTML5 video.
+              </video>
+            </div>
+          )}
+          {storagePath && !src && !error && <VideoSkeleton />}
+          {storagePath && error && <VideoError message={error} />}
+          {!storagePath && <VideoPlaceholder />}
+        </div>
       </div>
     </section>
   );

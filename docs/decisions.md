@@ -4,6 +4,44 @@ Append-only record of architectural / process decisions. Most recent at top.
 
 ---
 
+## 2026-04-29 — Capability pages snap-to-fit; placeholder pattern; Rovo → Atlassian Rovo
+
+User asked for capability pages to be no-scroll, snap-to-fit slideshows where each stage is one viewport with beautiful animated transitions. Plus: leave all capability pages blank except Atlassian Rovo (renamed from Rovo), with the intended structure preserved so future contributors can fill them in cleanly.
+
+### Slideshow refactored to no-scroll snap-to-fit
+
+`<Slideshow>` no longer takes a separate `hero` prop — stage 1 *is* the hero. The component now sizes itself to `h-[calc(100vh-8rem)]` and lays out as: `[StageNav]` → `[active stage, flex-1]` → `[stage indicator]`. Each stage MUST be designed to fit one viewport. The cardinal sin is adding internal scroll.
+
+New `<HeroStage>` component renders stage 1: kicker → display heading → tagline → optional stats (`<HeroStats>` + `<HeroStat>`).
+
+`<ContentStage>`, `<VideoStage>`, and `<FAQStage>` updated to `flex h-full flex-col overflow-hidden` so they fill the stage area without overflow.
+
+### Side-arrow navigation
+
+Floating circular nav buttons appear on the left/right edges of the stage area when there's somewhere to go. They scale + glow on hover (phoenix-tinted). Plus stepper-click and keyboard arrows. Three ways to navigate, all polished.
+
+GSAP transition between stages: outgoing fades + slides in the opposite direction; incoming fades from the appropriate side, slight scale-up. Inner `.gsap-stage-fade` elements stagger after the stage transition.
+
+### Placeholder pattern: `CapabilityComingSoon`
+
+New component for unbuilt capability pages. Renders a clean no-scroll hero with a "Coming soon" badge, the kicker / title / tagline (so the visual rhythm matches a real capability page), a 5-step "what this page will look like" footprint of the standard slideshow stages, and CTAs back to the catalog and to Atlassian Rovo as a reference.
+
+Each placeholder page file keeps its **intended slideshow structure** as a top-level JSDoc comment block — so when a contributor (or Claude session) goes to fill it in, the icon picks, stage labels, and content shape are pre-decided.
+
+Eight pages converted to placeholder: MultiAgentAnalysis, GitHubCopilot, CodeReview, AutomatedTesting, DocumentationGeneration, SpecToDesign, ClaudeDesign, ReleaseNotes.
+
+### Rovo → Atlassian Rovo
+
+Display label renamed throughout (sidebar nav, page hero). URL slug stays `/capabilities/rovo` for stability. Page file renamed `Rovo.tsx` → `AtlassianRovo.tsx`; the route and nav both point at the new file.
+
+Atlassian Rovo is the single fully-built capability today. It's the canonical reference for any future capability page — when filling in a placeholder, copy its shape.
+
+### CLAUDE.md updated
+
+Hard invariant #3 (capability pages are slideshows) updated to reflect the no-scroll requirement and the placeholder pattern: pages are *either* a built `<Slideshow>` *or* a `<CapabilityComingSoon>`. File map updated with the new components and reflects which capability pages are built vs. placeholder.
+
+---
+
 ## 2026-04-29 — Capability catalog expanded; AI/tool-agnostic codified
 
 User added five more capabilities to the catalog and stated the system needs to be AI/tool agnostic. New capability pages (slideshow pattern, full content):

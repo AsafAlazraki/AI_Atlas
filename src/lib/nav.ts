@@ -47,7 +47,7 @@ export const primaryNav: NavEntry[] = [
     children: [
       {
         type: 'leaf',
-        label: 'Rovo',
+        label: 'Atlassian Rovo',
         to: '/capabilities/rovo',
         icon: RocketLaunchIcon,
         description:

@@ -15,7 +15,9 @@ type Props = {
 };
 
 /**
- * Accordion FAQ list. One item open at a time; click to toggle.
+ * Accordion FAQ stage. Sized to fit one viewport — header on top, FAQ
+ * list fills remaining space. If the list overflows, the user can
+ * collapse the open item to see the rest. Don't add internal scroll.
  */
 export default function FAQStage({
   heading = 'Frequently asked questions',
@@ -25,16 +27,16 @@ export default function FAQStage({
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null);
 
   return (
-    <section className="card-glow overflow-hidden p-6 sm:p-8 lg:p-10">
-      <header className="max-w-3xl">
+    <section className="card-glow flex h-full flex-col overflow-hidden p-6 sm:p-8 lg:p-10">
+      <header className="gsap-stage-fade max-w-3xl flex-shrink-0">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">FAQ</p>
         <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
           {heading}
         </h2>
-        {description && <p className="mt-3 text-base text-midnight-300">{description}</p>}
+        {description && <p className="mt-3 text-sm text-midnight-300 sm:text-base">{description}</p>}
       </header>
 
-      <ul className="mt-8 divide-y divide-midnight-800/80 border-y border-midnight-800/80">
+      <ul className="gsap-stage-fade mt-6 flex-1 divide-y divide-midnight-800/80 overflow-hidden border-y border-midnight-800/80">
         {faqs.map((f) => {
           const isOpen = f.id === openId;
           return (
@@ -43,9 +45,9 @@ export default function FAQStage({
                 type="button"
                 onClick={() => setOpenId(isOpen ? null : f.id)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:bg-midnight-800/20"
+                className="flex w-full items-center justify-between gap-4 py-4 text-left transition-colors hover:bg-midnight-800/20"
               >
-                <span className="text-base font-medium text-white sm:text-lg">{f.question}</span>
+                <span className="text-sm font-medium text-white sm:text-base">{f.question}</span>
                 <ChevronDownIcon
                   className={clsx(
                     'h-5 w-5 flex-shrink-0 text-midnight-400 transition-transform duration-300',
@@ -61,7 +63,7 @@ export default function FAQStage({
                 )}
               >
                 <div className="overflow-hidden">
-                  <div className="pb-5 pr-8 text-sm text-midnight-200 sm:text-base">
+                  <div className="pb-4 pr-8 text-sm text-midnight-200">
                     {f.answer}
                   </div>
                 </div>

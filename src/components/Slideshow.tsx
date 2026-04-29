@@ -1,76 +1,74 @@
 import { useEffect, useRef, useState } from 'react';
-import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 import StageNav from './slideshow/StageNav';
-import type { CapabilityHeroData, SlideshowStage } from '../types/slideshow';
+import type { SlideshowStage } from '../types/slideshow';
 
 type Props = {
-  hero: CapabilityHeroData;
   stages: SlideshowStage[];
   /** Stage index to start on. */
   initialIdx?: number;
 };
 
 /**
- * Capability slideshow — the standard pattern for every AI Capability page.
+ * Capability slideshow — snap-to-fit, no-scroll, one stage per viewport.
  *
  *  ┌─────────────────────────────────────────┐
- *  │  Capability hero (kicker, title, tag)   │
- *  ├─────────────────────────────────────────┤
  *  │  Stepper nav (clickable segments)       │
  *  ├─────────────────────────────────────────┤
+ *  │                                         │
  *  │  Active stage content (animates in/out) │
+ *  │  ←                                  →   │
+ *  │                                         │
  *  ├─────────────────────────────────────────┤
- *  │  ← Previous                Next →       │
+ *  │       Stage 1 of 5 · Overview           │
  *  └─────────────────────────────────────────┘
  *
- * Keyboard: Left / Right arrows step between stages (when not in an input).
+ * Conventions:
+ *  - Stage 1 is always the hero / intro / overview (use `HeroStage`).
+ *  - Each stage MUST be designed to fit one viewport — no internal scroll.
+ *  - Keyboard: ← / → to step.
+ *  - Side-edge arrow buttons appear only when there's somewhere to go.
  */
-export default function Slideshow({ hero, stages, initialIdx = 0 }: Props) {
+export default function Slideshow({ stages, initialIdx = 0 }: Props) {
   const [idx, setIdx] = useState(initialIdx);
   const directionRef = useRef<'forward' | 'backward' | 'initial'>('initial');
   const stageRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   const goTo = (next: number) => {
     if (next === idx) return;
+    if (next < 0 || next >= stages.length) return;
     directionRef.current = next > idx ? 'forward' : 'backward';
-    setIdx(Math.max(0, Math.min(stages.length - 1, next)));
+    setIdx(next);
   };
 
-  // Hero entrance — runs once on mount.
-  useGSAP(
-    () => {
-      gsap.from('.gsap-fade', {
-        y: 24,
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: 0.07,
-        clearProps: 'transform,opacity',
-      });
-    },
-    { scope: heroRef, dependencies: [] },
-  );
-
-  // Stage transition — runs when idx changes.
+  // Stage transition — fade + horizontal slide + inner stagger.
   useEffect(() => {
     if (!stageRef.current) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) return;
 
     const direction = directionRef.current;
-    const xFrom = direction === 'backward' ? -32 : direction === 'forward' ? 32 : 16;
+    const xFrom =
+      direction === 'backward' ? '-3%' : direction === 'forward' ? '3%' : '1%';
 
-    gsap.fromTo(
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.fromTo(
       stageRef.current,
-      { x: xFrom, opacity: 0 },
-      { x: 0, opacity: 1, duration: 0.45, ease: 'power3.out', clearProps: 'transform' },
+      { x: xFrom, opacity: 0, scale: 0.985 },
+      { x: 0, opacity: 1, scale: 1, duration: 0.55, clearProps: 'transform' },
     );
+    tl.from(
+      stageRef.current.querySelectorAll('.gsap-stage-fade'),
+      { y: 14, opacity: 0, duration: 0.45, stagger: 0.05, clearProps: 'transform,opacity' },
+      '-=0.35',
+    );
+    return () => {
+      tl.kill();
+    };
   }, [idx]);
 
   // Keyboard nav.
@@ -90,70 +88,68 @@ export default function Slideshow({ hero, stages, initialIdx = 0 }: Props) {
   const isLast = idx === stages.length - 1;
 
   return (
-    <div className="space-y-8 sm:space-y-10">
-      {/* Hero */}
-      <div ref={heroRef} className="relative">
+    <div className="flex h-[calc(100vh-8rem)] flex-col">
+      <div className="gsap-fade flex-shrink-0">
+        <StageNav stages={stages} activeIdx={idx} onJump={goTo} />
+      </div>
+
+      <div className="relative mt-6 flex-1">
         <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-24 -top-16 h-64 w-64 rounded-full bg-phoenix-500/10 blur-3xl"
-        />
-        <p className="gsap-fade text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">
-          {hero.kicker}
-        </p>
-        <h1 className="gsap-fade mt-3 text-display-md sm:text-display-lg">
-          {hero.title}
-          {hero.titleAccent && (
-            <>
-              {' '}
-              <span className="accent-phrase">{hero.titleAccent}</span>
-            </>
-          )}
-        </h1>
-        <p className="gsap-fade mt-4 max-w-3xl text-base text-midnight-300 sm:text-lg">
-          {hero.tagline}
-        </p>
-      </div>
-
-      {/* Stepper */}
-      <StageNav stages={stages} activeIdx={idx} onJump={goTo} />
-
-      {/* Active stage */}
-      <div ref={stageRef} className="min-h-[440px]">
-        {stages[idx]?.content}
-      </div>
-
-      {/* Footer nav */}
-      <div className="flex items-center justify-between gap-4 pt-2">
-        <button
-          type="button"
-          onClick={() => goTo(idx - 1)}
-          disabled={isFirst}
-          className={
-            isFirst
-              ? 'btn-ghost cursor-not-allowed opacity-40'
-              : 'btn-ghost'
-          }
+          ref={stageRef}
+          key={idx}
+          className="absolute inset-0 overflow-hidden"
         >
-          <ArrowLeftIcon className="h-4 w-4" />
-          Previous
-        </button>
-        <div className="hidden text-xs uppercase tracking-wider text-midnight-400 sm:block">
-          Stage {idx + 1} of {stages.length} · {stages[idx]?.label}
+          {stages[idx]?.content}
         </div>
-        <button
-          type="button"
-          onClick={() => goTo(idx + 1)}
+
+        {/* Side-edge nav buttons */}
+        <SideArrow
+          direction="left"
+          disabled={isFirst}
+          onClick={() => goTo(idx - 1)}
+          label={stages[idx - 1]?.label}
+        />
+        <SideArrow
+          direction="right"
           disabled={isLast}
-          className={
-            isLast
-              ? 'btn-primary cursor-not-allowed opacity-40'
-              : 'btn-primary'
-          }
-        >
-          Next
-          <ArrowRightIcon className="h-4 w-4" />
-        </button>
+          onClick={() => goTo(idx + 1)}
+          label={stages[idx + 1]?.label}
+        />
+      </div>
+
+      <div className="mt-4 flex flex-shrink-0 items-center justify-center gap-3 text-xs uppercase tracking-wider text-midnight-400">
+        <span className="text-midnight-500">{idx + 1}</span>
+        <span aria-hidden="true">·</span>
+        <span>{stages[idx]?.label}</span>
+        <span aria-hidden="true">·</span>
+        <span className="text-midnight-500">{stages.length}</span>
       </div>
     </div>
+  );
+}
+
+function SideArrow({
+  direction,
+  disabled,
+  onClick,
+  label,
+}: {
+  direction: 'left' | 'right';
+  disabled: boolean;
+  onClick: () => void;
+  label: string | undefined;
+}) {
+  if (disabled) return null;
+  const Icon = direction === 'left' ? ChevronLeftIcon : ChevronRightIcon;
+  const positionClass = direction === 'left' ? 'left-3 sm:left-4' : 'right-3 sm:right-4';
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Go to ${direction === 'left' ? 'previous' : 'next'} stage${label ? ` — ${label}` : ''}`}
+      className={`group absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-midnight-700/60 bg-midnight-900/70 text-white shadow-lift backdrop-blur-md transition-all hover:scale-110 hover:border-phoenix-500/60 hover:bg-midnight-800/90 hover:shadow-phoenix-glow-soft ${positionClass}`}
+    >
+      <Icon className="h-5 w-5 transition-transform group-hover:scale-110" aria-hidden="true" />
+    </button>
   );
 }

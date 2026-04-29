@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import DashboardLayout from './components/DashboardLayout';
 import Dashboard from './pages/Dashboard';
 import Capabilities from './pages/Capabilities';
-import Rovo from './pages/capabilities/Rovo';
+import AtlassianRovo from './pages/capabilities/AtlassianRovo';
 import MultiAgentAnalysis from './pages/capabilities/MultiAgentAnalysis';
 import GitHubCopilot from './pages/capabilities/GitHubCopilot';
 import CodeReview from './pages/capabilities/CodeReview';
@@ -20,7 +20,7 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="capabilities">
           <Route index element={<Capabilities />} />
-          <Route path="rovo" element={<Rovo />} />
+          <Route path="rovo" element={<AtlassianRovo />} />
           <Route path="multi-agent-analysis" element={<MultiAgentAnalysis />} />
           <Route path="github-copilot" element={<GitHubCopilot />} />
           <Route path="code-review" element={<CodeReview />} />
