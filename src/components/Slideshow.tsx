@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/24/outline';
 import StageNav from './slideshow/StageNav';
 import type { SlideshowStage } from '../types/slideshow';
 
@@ -30,8 +26,7 @@ type Props = {
  * Conventions:
  *  - Stage 1 is always the hero / intro / overview (use `HeroStage`).
  *  - Each stage MUST be designed to fit one viewport — no internal scroll.
- *  - Keyboard: ← / → to step.
- *  - Side-edge arrow buttons appear only when there's somewhere to go.
+ *  - Navigation: clickable stepper segments, or ← / → keyboard arrows.
  */
 export default function Slideshow({ stages, initialIdx = 0 }: Props) {
   const [idx, setIdx] = useState(initialIdx);
@@ -84,9 +79,6 @@ export default function Slideshow({ stages, initialIdx = 0 }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, stages.length]);
 
-  const isFirst = idx === 0;
-  const isLast = idx === stages.length - 1;
-
   return (
     <div className="flex h-[calc(100vh-8rem)] flex-col">
       <div className="gsap-fade flex-shrink-0">
@@ -101,20 +93,6 @@ export default function Slideshow({ stages, initialIdx = 0 }: Props) {
         >
           {stages[idx]?.content}
         </div>
-
-        {/* Side-edge nav buttons */}
-        <SideArrow
-          direction="left"
-          disabled={isFirst}
-          onClick={() => goTo(idx - 1)}
-          label={stages[idx - 1]?.label}
-        />
-        <SideArrow
-          direction="right"
-          disabled={isLast}
-          onClick={() => goTo(idx + 1)}
-          label={stages[idx + 1]?.label}
-        />
       </div>
 
       <div className="mt-4 flex flex-shrink-0 items-center justify-center gap-3 text-xs uppercase tracking-wider text-midnight-400">
@@ -125,31 +103,5 @@ export default function Slideshow({ stages, initialIdx = 0 }: Props) {
         <span className="text-midnight-500">{stages.length}</span>
       </div>
     </div>
-  );
-}
-
-function SideArrow({
-  direction,
-  disabled,
-  onClick,
-  label,
-}: {
-  direction: 'left' | 'right';
-  disabled: boolean;
-  onClick: () => void;
-  label: string | undefined;
-}) {
-  if (disabled) return null;
-  const Icon = direction === 'left' ? ChevronLeftIcon : ChevronRightIcon;
-  const positionClass = direction === 'left' ? 'left-3 sm:left-4' : 'right-3 sm:right-4';
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Go to ${direction === 'left' ? 'previous' : 'next'} stage${label ? ` — ${label}` : ''}`}
-      className={`group absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-midnight-700/60 bg-midnight-900/70 text-white shadow-lift backdrop-blur-md transition-all hover:scale-110 hover:border-phoenix-500/60 hover:bg-midnight-800/90 hover:shadow-phoenix-glow-soft ${positionClass}`}
-    >
-      <Icon className="h-5 w-5 transition-transform group-hover:scale-110" aria-hidden="true" />
-    </button>
   );
 }
