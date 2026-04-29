@@ -29,11 +29,11 @@ type Props = {
   words: string[];
   /** Per-character type-in delay (ms). Default 70. */
   typeMs?: number;
-  /** Pause after a phrase is fully typed (ms). Default 1600. */
+  /** Pause after a phrase is fully typed (ms). Default 3200. */
   holdMs?: number;
   /** Per-character erase delay (ms). Default 35. */
   eraseMs?: number;
-  /** Pause between erase finish and next phrase start (ms). Default 250. */
+  /** Pause between erase finish and next phrase start (ms). Default 900. */
   pauseMs?: number;
   /** Wrapper class — defaults to .accent-phrase from index.css */
   className?: string;
@@ -49,9 +49,9 @@ type Props = {
 export default function CyclingText({
   words,
   typeMs = 70,
-  holdMs = 1600,
+  holdMs = 3200,
   eraseMs = 35,
-  pauseMs = 250,
+  pauseMs = 900,
   className = 'accent-phrase',
 }: Props) {
   const [state, dispatch] = useReducer(reducer, { idx: 0, text: '', phase: 'typing' });

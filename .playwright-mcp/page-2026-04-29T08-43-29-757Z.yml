@@ -1,0 +1,91 @@
+- generic [ref=e3]:
+  - img
+  - complementary "Primary navigation" [ref=e4]:
+    - img "PhoenixDX" [ref=e7]
+    - navigation [ref=e8]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e13]
+        - listitem [ref=e15]:
+          - button "AI Capabilities" [ref=e16] [cursor=pointer]:
+            - img [ref=e17]
+          - generic:
+            - list:
+              - listitem [ref=e19]:
+                - list [ref=e20]:
+                  - listitem [ref=e21]:
+                    - link "Rovo" [ref=e22] [cursor=pointer]:
+                      - /url: /capabilities/rovo
+                  - listitem [ref=e23]:
+                    - link "Multi Agent Analysis" [ref=e24] [cursor=pointer]:
+                      - /url: /capabilities/multi-agent-analysis
+                  - listitem [ref=e25]:
+                    - link "Spec to Design" [ref=e26] [cursor=pointer]:
+                      - /url: /capabilities/spec-to-design
+    - list [ref=e28]:
+      - listitem [ref=e29]:
+        - link "Settings" [ref=e30] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e31]
+  - generic [ref=e34]:
+    - banner [ref=e35]:
+      - button "Expand sidebar" [ref=e36] [cursor=pointer]:
+        - img [ref=e37]
+      - heading "PDX AI Atlas" [level=1] [ref=e106]
+      - 'generic "Environment: dev" [ref=e41]': dev
+      - button "Account" [ref=e43] [cursor=pointer]:
+        - img [ref=e44]
+    - main [ref=e46]:
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - paragraph [ref=e109]: Catalog
+          - heading "AI Capabilities" [level=1] [ref=e110]
+          - paragraph [ref=e111]: The AI capabilities PhoenixDX has productionised across the SDLC. Pick one to see how it works in context — more being added every week.
+        - generic [ref=e112]:
+          - heading "Available now" [level=2] [ref=e114]
+          - generic [ref=e116]:
+            - link "Rovo AI agents and enterprise search powered by your knowledge — across the SDLC. Open" [ref=e117] [cursor=pointer]:
+              - /url: /capabilities/rovo
+              - img [ref=e119]
+              - heading "Rovo" [level=3] [ref=e121]
+              - paragraph [ref=e122]: AI agents and enterprise search powered by your knowledge — across the SDLC.
+              - generic [ref=e123]:
+                - text: Open
+                - img [ref=e124]
+            - link "Multi Agent Analysis A team of specialised AI agents that analyse codebases, requirements, and architecture together — each agent owning a domain. Open" [ref=e126] [cursor=pointer]:
+              - /url: /capabilities/multi-agent-analysis
+              - img [ref=e128]
+              - heading "Multi Agent Analysis" [level=3] [ref=e130]
+              - paragraph [ref=e131]: A team of specialised AI agents that analyse codebases, requirements, and architecture together — each agent owning a domain.
+              - generic [ref=e132]:
+                - text: Open
+                - img [ref=e133]
+            - link "Spec to Design Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes. Open" [ref=e135] [cursor=pointer]:
+              - /url: /capabilities/spec-to-design
+              - img [ref=e137]
+              - heading "Spec to Design" [level=3] [ref=e139]
+              - paragraph [ref=e140]: Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes.
+              - generic [ref=e141]:
+                - text: Open
+                - img [ref=e142]
+        - generic [ref=e144]:
+          - heading "On the roadmap" [level=2] [ref=e146]
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e151]: Roadmap
+              - heading "Requirements Copilot" [level=3] [ref=e152]
+              - paragraph [ref=e153]: Turn discovery conversations into structured user stories, acceptance criteria, and test scenarios — grounded in your domain context.
+            - generic [ref=e154]:
+              - generic [ref=e156]: Roadmap
+              - heading "Code Review Agent" [level=3] [ref=e157]
+              - paragraph [ref=e158]: Project-aware review agent that catches what static analysis misses — security, architecture drift, and team conventions.
+            - generic [ref=e159]:
+              - generic [ref=e161]: Roadmap
+              - heading "Test Generation" [level=3] [ref=e162]
+              - paragraph [ref=e163]: Generate and maintain unit, integration, and end-to-end tests from specs and existing code paths.
+            - generic [ref=e164]:
+              - generic [ref=e166]: Roadmap
+              - heading "Observability Insights" [level=3] [ref=e167]
+              - paragraph [ref=e168]: Surface anomalies, root causes, and remediation suggestions from production telemetry — in plain English.

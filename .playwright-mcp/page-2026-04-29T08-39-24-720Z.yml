@@ -1,0 +1,50 @@
+- generic [ref=e3]:
+  - img
+  - complementary "Primary navigation" [ref=e4]:
+    - img "PhoenixDX" [ref=e7]
+    - navigation [ref=e8]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e13]
+        - listitem [ref=e15]:
+          - button "AI Capabilities" [ref=e16] [cursor=pointer]:
+            - img [ref=e17]
+          - generic:
+            - list:
+              - listitem [ref=e19]:
+                - list [ref=e20]:
+                  - listitem [ref=e21]:
+                    - link "Rovo" [ref=e22] [cursor=pointer]:
+                      - /url: /capabilities/rovo
+                  - listitem [ref=e23]:
+                    - link "Multi Agent Analysis" [ref=e24] [cursor=pointer]:
+                      - /url: /capabilities/multi-agent-analysis
+                  - listitem [ref=e25]:
+                    - link "Spec to Design" [ref=e26] [cursor=pointer]:
+                      - /url: /capabilities/spec-to-design
+    - list [ref=e28]:
+      - listitem [ref=e29]:
+        - link "Settings" [ref=e30] [cursor=pointer]:
+          - /url: /settings
+          - img [ref=e31]
+  - generic [ref=e34]:
+    - banner [ref=e35]:
+      - button "Expand sidebar" [ref=e36] [cursor=pointer]:
+        - img [ref=e37]
+      - heading "Dashboard" [level=1] [ref=e40]
+      - 'generic "Environment: dev" [ref=e41]': dev
+      - button "Account" [ref=e43] [cursor=pointer]:
+        - img [ref=e44]
+    - main [ref=e46]:
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - paragraph [ref=e51]: PhoenixDX · AI Atlas
+          - heading "AI-powered" [level=1] [ref=e52]: AI-powered
+          - paragraph [ref=e55]: A demo landscape showcasing PhoenixDX's AI capabilities across the software development lifecycle — discovery, design, build, test, deploy, operate.
+          - link "Browse AI capabilities" [ref=e57] [cursor=pointer]:
+            - /url: /capabilities
+            - text: Browse AI capabilities
+            - img [ref=e58]
+        - img [ref=e64]

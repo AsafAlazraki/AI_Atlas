@@ -7,7 +7,7 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { appEnv } from '../lib/env';
-import { allLeaves } from '../lib/nav';
+import { allLeaves, primaryNav, type NavGroup } from '../lib/nav';
 
 type Props = {
   collapsed: boolean;
@@ -23,9 +23,16 @@ const envStyles: Record<typeof appEnv, string> = {
 
 export default function Topbar({ collapsed, onToggleCollapse, onOpenMobile }: Props) {
   const { pathname } = useLocation();
-  const current =
-    allLeaves.find((l) => (l.to === '/' ? pathname === '/' : pathname === l.to)) ??
-    allLeaves.find((l) => pathname.startsWith(l.to) && l.to !== '/');
+  const exactLeaf = allLeaves.find((l) =>
+    l.to === '/' ? pathname === '/' : pathname === l.to,
+  );
+  const groupMatch = primaryNav.find(
+    (e): e is NavGroup => e.type === 'group' && pathname === e.basePath,
+  );
+  const startsWithLeaf = allLeaves.find(
+    (l) => pathname.startsWith(l.to) && l.to !== '/',
+  );
+  const current = exactLeaf ?? groupMatch ?? startsWithLeaf;
 
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-midnight-800/80 bg-midnight-950/70 px-4 backdrop-blur-xl sm:px-6">

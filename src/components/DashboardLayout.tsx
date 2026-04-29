@@ -5,12 +5,13 @@ import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import AnimatedBackground from './AnimatedBackground';
 
-const COLLAPSED_KEY = 'pdx-sidebar-collapsed';
+const COLLAPSED_KEY = 'pdx-sidebar-collapsed-v2';
 
 export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    return window.localStorage.getItem(COLLAPSED_KEY) === 'true';
+    if (typeof window === 'undefined') return true;
+    const stored = window.localStorage.getItem(COLLAPSED_KEY);
+    return stored === null ? true : stored === 'true';
   });
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();

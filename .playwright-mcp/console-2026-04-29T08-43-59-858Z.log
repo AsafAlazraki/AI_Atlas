@@ -1,0 +1,2 @@
+[     109ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5174/node_modules/.vite/deps/react-dom_client.js?v=a8677d80:20102
+[     130ms] [WARNING] [firebase] VITE_FIREBASE_API_KEY is not set. Using placeholder config — Firebase reads/writes will fail. Copy .env.example → .env.local and fill in the real values. @ http://localhost:5174/src/lib/firebase.ts?t=1777451671372:7

@@ -53,10 +53,13 @@ export default function Dashboard() {
           <p className="gsap-fade text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400">
             PhoenixDX · AI Atlas
           </p>
-          <h1 className="gsap-fade mt-3 text-display-md text-white sm:text-display-lg">
+          <h1 className="gsap-fade mt-3 text-display-md text-white">
             AI-powered
             <br />
-            <CyclingText words={cyclingPhrases} />
+            <CyclingText
+              words={cyclingPhrases}
+              className="accent-phrase whitespace-nowrap"
+            />
           </h1>
           <p className="gsap-fade mt-5 max-w-xl text-base text-midnight-300 sm:text-lg">
             A demo landscape showcasing PhoenixDX&apos;s AI capabilities across
@@ -67,9 +70,6 @@ export default function Dashboard() {
             <Link to="/capabilities" className="btn-primary">
               Browse AI capabilities
               <ArrowRightIcon className="h-4 w-4" />
-            </Link>
-            <Link to="/capabilities/rovo" className="btn-ghost">
-              See Rovo in action
             </Link>
           </div>
         </section>

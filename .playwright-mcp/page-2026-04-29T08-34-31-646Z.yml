@@ -1,0 +1,62 @@
+- generic [ref=e3]:
+  - img
+  - complementary "Primary navigation" [ref=e4]:
+    - img "PhoenixDX" [ref=e7]
+    - navigation [ref=e8]:
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "Dashboard" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e13]
+            - generic [ref=e15]: Dashboard
+        - listitem [ref=e16]:
+          - button "AI Capabilities" [ref=e17] [cursor=pointer]:
+            - img [ref=e18]
+            - generic [ref=e20]: AI Capabilities
+            - img [ref=e21]
+          - generic:
+            - list:
+              - listitem [ref=e23]:
+                - list [ref=e24]:
+                  - listitem [ref=e25]:
+                    - link "Rovo" [ref=e26] [cursor=pointer]:
+                      - /url: /capabilities/rovo
+                      - generic [ref=e28]: Rovo
+                  - listitem [ref=e29]:
+                    - link "Multi Agent Analysis" [ref=e30] [cursor=pointer]:
+                      - /url: /capabilities/multi-agent-analysis
+                      - generic [ref=e32]: Multi Agent Analysis
+                  - listitem [ref=e33]:
+                    - link "Spec to Design" [ref=e34] [cursor=pointer]:
+                      - /url: /capabilities/spec-to-design
+                      - generic [ref=e36]: Spec to Design
+    - generic [ref=e37]:
+      - list [ref=e38]:
+        - listitem [ref=e39]:
+          - link "Settings" [ref=e40] [cursor=pointer]:
+            - /url: /settings
+            - img [ref=e41]
+            - generic [ref=e44]: Settings
+      - generic [ref=e45]: v0.0.1 · PhoenixDX
+  - generic [ref=e46]:
+    - banner [ref=e47]:
+      - button "Collapse sidebar" [ref=e48] [cursor=pointer]:
+        - img [ref=e49]
+      - heading "Dashboard" [level=1] [ref=e52]
+      - 'generic "Environment: dev" [ref=e53]': dev
+      - button "Account" [ref=e55] [cursor=pointer]:
+        - img [ref=e56]
+    - main [ref=e58]:
+      - generic [ref=e61]:
+        - generic [ref=e62]:
+          - paragraph [ref=e63]: PhoenixDX · AI Atlas
+          - heading "AI-powered" [level=1] [ref=e64]: AI-powered
+          - paragraph [ref=e67]: A demo landscape showcasing PhoenixDX's AI capabilities across the software development lifecycle — discovery, design, build, test, deploy, operate.
+          - generic [ref=e68]:
+            - link "Browse AI capabilities" [ref=e69] [cursor=pointer]:
+              - /url: /capabilities
+              - text: Browse AI capabilities
+              - img [ref=e70]
+            - link "See Rovo in action" [ref=e72] [cursor=pointer]:
+              - /url: /capabilities/rovo
+        - img [ref=e77]

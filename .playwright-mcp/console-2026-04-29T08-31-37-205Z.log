@@ -1,0 +1,10 @@
+[     397ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:5174/node_modules/.vite/deps/react-dom_client.js?v=a8677d80:20102
+[     432ms] FirebaseError: Firebase: Error (auth/invalid-api-key).
+    at createErrorInternal (http://localhost:5174/node_modules/.vite/deps/firebase_auth.js?v=a8677d80:709:38)
+    at _assert (http://localhost:5174/node_modules/.vite/deps/firebase_auth.js?v=a8677d80:713:11)
+    at Component.instanceFactory (http://localhost:5174/node_modules/.vite/deps/firebase_auth.js?v=a8677d80:8040:7)
+    at Provider.getOrInitializeService (http://localhost:5174/node_modules/.vite/deps/chunk-5DLF7G4Q.js?v=a8677d80:1096:33)
+    at Provider.initialize (http://localhost:5174/node_modules/.vite/deps/chunk-5DLF7G4Q.js?v=a8677d80:1043:27)
+    at initializeAuth (http://localhost:5174/node_modules/.vite/deps/firebase_auth.js?v=a8677d80:3297:25)
+    at getAuth (http://localhost:5174/node_modules/.vite/deps/firebase_auth.js?v=a8677d80:8110:16)
+    at http://localhost:5174/src/lib/firebase.ts?t=1777448585359:14:21
