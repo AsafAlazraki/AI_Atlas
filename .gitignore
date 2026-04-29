@@ -32,6 +32,9 @@ Thumbs.db
 # Claude Code per-developer settings
 .claude/settings.local.json
 
+# Playwright MCP tool artifacts (browser snapshots, console logs)
+.playwright-mcp/
+
 # logs
 npm-debug.log*
 yarn-debug.log*
