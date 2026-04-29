@@ -9,17 +9,87 @@
     height: 100%;
   }
 
+  html {
+    color-scheme: dark;
+  }
+
   body {
-    @apply font-sans antialiased text-ink-800 bg-surface-subtle;
+    @apply font-sans antialiased text-white bg-midnight-950;
+    background-image:
+      radial-gradient(60% 80% at 0% 0%, rgb(225 29 43 / 0.05) 0%, transparent 60%),
+      radial-gradient(70% 80% at 100% 0%, rgb(156 200 232 / 0.04) 0%, transparent 65%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-phoenix-500/30 text-white;
   }
 
   *:focus-visible {
-    @apply outline-none ring-2 ring-phoenix-500 ring-offset-2 ring-offset-surface-subtle rounded-md;
+    @apply outline-none ring-2 ring-phoenix-500 ring-offset-2 ring-offset-midnight-950 rounded-md;
+  }
+
+  /* Subtle scrollbar styling for dark theme */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-midnight-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-midnight-600;
   }
 }
 
 @layer components {
+  /* Card surface — slightly elevated above the page bg with a soft inner highlight */
   .card {
-    @apply bg-surface rounded-xl border border-ink-100 shadow-card;
+    @apply relative rounded-2xl border border-midnight-700/60 bg-midnight-800/60 shadow-card backdrop-blur;
+  }
+
+  .card-glow {
+    @apply card;
+    background-image:
+      radial-gradient(120% 80% at 0% 0%, rgb(225 29 43 / 0.08) 0%, transparent 55%),
+      radial-gradient(120% 80% at 100% 0%, rgb(156 200 232 / 0.06) 0%, transparent 55%),
+      linear-gradient(180deg, rgb(15 23 42 / 0.6), rgb(15 23 42 / 0.6));
+  }
+
+  /* Pill CTA — phoenix-dx.com style */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-phoenix-cta px-6 py-3 text-sm font-semibold text-white shadow-phoenix-glow-soft transition-all duration-200 hover:shadow-phoenix-glow hover:brightness-110 active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-midnight-600 bg-midnight-800/50 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:border-midnight-500 hover:bg-midnight-700/60;
+  }
+
+  /* Highlighted phrase like phoenix-dx.com's "software development" */
+  .accent-phrase {
+    @apply text-azure-300;
+  }
+
+  /* Soft section divider */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-midnight-700 to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-gradient-phoenix {
+    background-image: linear-gradient(135deg, #ffffff 0%, #fbc8cc 50%, #f26773 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-azure {
+    background-image: linear-gradient(135deg, #ffffff 0%, #c7ddf0 60%, #9cc8e8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

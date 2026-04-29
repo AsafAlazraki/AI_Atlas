@@ -4,6 +4,36 @@ Append-only record of architectural / process decisions. Most recent at top.
 
 ---
 
+## 2026-04-29 — Visual upgrade to phoenix-dx.com fidelity
+
+### Brand-faithful dark theme
+
+User saw bare-bones light theme and asked for phoenix-dx.com-level polish: dark navy base, phoenix red accents, light-blue (`#9CC8E8`) for highlighted phrases, large display typography. Defined three Tailwind palettes — `phoenix.*`, `midnight.*`, `azure.*` — plus component classes (`card`, `card-glow`, `btn-primary`, `btn-ghost`, `accent-phrase`, `hairline`) and display-* font sizes with negative letter-spacing for the bold hero look.
+
+The dark theme is **the** theme — no light variant. Every new component should assume dark surfaces.
+
+### GSAP for entrance animations
+
+Added `gsap` + `@gsap/react` and a project-level `useEntrance` hook that applies a stagger fade-up to any `.gsap-fade` element inside a scoped ref. Chosen over CSS-only because: (a) clean stagger, (b) `power3.out` ease, (c) `clearProps` so the elements are unaffected post-animation. Hover/interactive transitions stay in Tailwind — GSAP only for entrances.
+
+### Real PhoenixDX logos in repo
+
+User dropped two source files into project root: a 2048×469 wordmark (white "Phoenix" text + red "DX" + icon, designed for dark backgrounds) and a square icon JPG. Moved to `public/phoenixdx-wordmark.png` and `public/phoenixdx-icon.jpg`. The wordmark renders in the expanded sidebar; the icon renders in the collapsed sidebar and serves as the favicon. Removed the `public/phoenix.svg` placeholder.
+
+### Nav restructured: groups, sub-items, footer slot
+
+`AI Capabilities` is now a `NavGroup` with `children`. Auto-expands when on a child route. `Settings` moved to a dedicated `footerNav` array rendered at the bottom of the sidebar (visually separated by a hairline border). `Demo Landscape` page deleted at user request.
+
+`Capabilities` (the overview at `/capabilities`) is now a **showcase landing page** — a grid of capability cards linking to each sub-page, plus an "On the roadmap" section with placeholders for future capabilities (Requirements Copilot, Code Review Agent, Test Generation, Observability Insights). When a new capability page is added, just add a `NavLeaf` to the group's `children` and a `Route` — the showcase auto-renders the new card.
+
+### Rovo as the first capability page
+
+Created `src/pages/capabilities/Rovo.tsx`. Pattern is: Hero (kicker → display heading → tagline with `accent-phrase` highlight → CTAs) → Feature grid (4 cards: enterprise search, agents, automation, knowledge) → SDLC table (one row per stage explaining how Rovo applies) → closing CTA card. Content positions Rovo as Atlassian's AI tooling that PhoenixDX deploys — reinforces the "we put AI to work for clients" framing of the Atlas.
+
+This page template should be the model for every future capability sub-page.
+
+---
+
 ## 2026-04-29 — Initial scaffold decisions
 
 Made during the kick-off session. Captured here so future Claude Code sessions on other devices have the context.

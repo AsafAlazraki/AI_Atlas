@@ -9,10 +9,17 @@ A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Single-pag
 ## Stack at a glance
 
 - React 19 + Vite 6 + TypeScript 5
-- Tailwind CSS 3 (PhoenixDX red `#E11D2B` is the primary brand token — sampled from the logo, refine when an official brand guide is available)
+- Tailwind CSS 3 — **dark theme** matching phoenix-dx.com. Three palettes:
+  `phoenix.*` (red, brand), `midnight.*` (navy surfaces, page bg = `midnight-950`),
+  `azure.*` (light-blue accent — used for highlighted phrases like the
+  "software development" treatment on phoenix-dx.com).
 - React Router v7 (library mode, `BrowserRouter`)
 - Firebase Web SDK: Auth + Firestore (Hosting pending — admin is enabling it)
+- **GSAP + @gsap/react** for entrance animations (`useEntrance` hook applies a
+  staggered fade-up to any `.gsap-fade` element inside the page scope)
 - Heroicons, clsx
+- Brand assets: `public/phoenixdx-wordmark.png` (full logo, dark-bg-ready) and
+  `public/phoenixdx-icon.jpg` (square icon — also the favicon)
 
 ## Hard invariants — do not break these
 
@@ -47,9 +54,12 @@ Never commit directly to `dev`, `test`, or `prod` once branch protection is on (
 
 ## Current state
 
-- ✅ Scaffold complete: bare-bones dashboard with collapsible sidebar, topbar with env badge, four placeholder pages (Dashboard, AI Capabilities, Demo Landscape, Settings).
+- ✅ Dark-themed dashboard matching phoenix-dx.com brand aesthetic. Real PhoenixDX logos in place (`public/phoenixdx-wordmark.png`, `public/phoenixdx-icon.jpg`).
+- ✅ Sidebar with expandable nav groups (AI Capabilities is a group), Settings pinned to the bottom.
+- ✅ Pages: Dashboard, Capabilities (showcase/overview), Capabilities → Rovo (flagship demo page), Settings.
+- ✅ GSAP entrance animations on every page via `useEntrance` hook + `.gsap-fade` class.
 - ✅ Build passes (`npm run build`).
-- ✅ Dev server runs on `http://localhost:5173` (`npm run dev`).
+- ✅ Dev server runs (`npm run dev`).
 - ✅ Firebase SDK wired but **not initialized with real config** — `.env.local` is missing.
 - ✅ Three local branches at the same initial commit: `dev`, `test`, `prod`.
 - ⏳ **No git remote configured.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. First push attempt failed with 403 because the AsafAlazraki account doesn't have write access to the Phoenix-DX org. Will be pushed from a device whose credentials have access.
@@ -89,31 +99,49 @@ npm run typecheck   # tsc -b --noEmit
 
 ```
 src/
-├── App.tsx                     Routes
+├── App.tsx                     Routes (/, /capabilities, /capabilities/rovo, /settings)
 ├── main.tsx                    React root + BrowserRouter
-├── index.css                   Tailwind directives + base layer
+├── index.css                   Tailwind directives + base layer + component classes
 ├── components/
 │   ├── DashboardLayout.tsx     Shell — owns sidebar collapsed state (persisted to localStorage as 'pdx-sidebar-collapsed')
-│   ├── Sidebar.tsx             Collapsible (desktop) / drawer (mobile)
+│   ├── Sidebar.tsx             Collapsible (desktop) / drawer (mobile). Supports NavLeaf + NavGroup (with sub-items + auto-expand). Brand wordmark or icon based on collapsed state.
 │   └── Topbar.tsx              Sticky header with env badge + collapse toggle
 ├── pages/
-│   ├── Dashboard.tsx           Hero + 3 stat cards + getting-started panel
-│   ├── Capabilities.tsx        Empty state — Firestore wiring TODO
-│   ├── DemoLandscape.tsx       Skeleton tile grid
-│   └── Settings.tsx            Reads from env.ts to display runtime config
+│   ├── Dashboard.tsx           Hero + stat cards + capability CTA panel
+│   ├── Capabilities.tsx        Overview/showcase — links to each sub-page; "On the roadmap" section for future capabilities
+│   ├── capabilities/
+│   │   └── Rovo.tsx            Atlassian Rovo capability page — hero, feature grid, SDLC use cases, CTA
+│   └── Settings.tsx            Runtime config display
 └── lib/
     ├── env.ts                  Single source of truth for env vars
     ├── firebase.ts             Initialises Firebase app, auth, db
     ├── firestore.ts            col() + docRef() — env-prefixed wrappers
-    └── nav.ts                  Shared nav item list (used by Sidebar + Topbar)
+    ├── nav.ts                  NavLeaf + NavGroup types; primaryNav, footerNav, allLeaves, capabilityLeaves exports
+    └── useEntrance.ts          GSAP hook — apply `.gsap-fade` to elements inside a page-scoped ref
 ```
+
+### Adding a new AI capability page
+
+1. Create `src/pages/capabilities/<Name>.tsx`. Copy `Rovo.tsx` as a starting point (Hero + FeatureGrid + SDLC + CTA).
+2. Add the route under the `capabilities` parent in `src/App.tsx`:
+   `<Route path="<slug>" element={<Name />} />`
+3. Add a `NavLeaf` to the `AI Capabilities` group's `children` array in `src/lib/nav.ts` — set a `description` (it shows on the Capabilities overview page card).
+4. Use Heroicons for the leaf `icon`. For consistency, keep to `24/outline`.
+5. Pages should follow the established hero pattern: kicker label (uppercase tracking-wide phoenix-400) → display heading → subtitle (with optional `accent-phrase` span on highlighted words) → CTA buttons.
 
 ## Style notes for new code
 
-- TypeScript strict. No `any`.
-- Use `clsx` for conditional class names, not template strings.
-- Tailwind tokens to prefer: `phoenix-*` for brand, `ink-*` for text/dividers, `surface*` for backgrounds. `card` is a shorthand component class for the standard card shell.
-- Heroicons 24/outline style throughout for visual consistency.
+- **Dark theme only.** Page bg is `midnight-950`; text default is white. Don't reach for light Tailwind colors (`bg-white`, `text-gray-900`) — they'll break the visual language.
+- **TypeScript strict.** No `any`.
+- **Use `clsx`** for conditional class names, not template strings.
+- **Tailwind tokens to prefer:**
+  - `phoenix-*` for brand red (CTAs, active state, accent glows).
+  - `midnight-*` for surfaces and muted text. Common: `midnight-950` page, `midnight-800` cards, `midnight-700` borders, `midnight-300` muted text.
+  - `azure-300` for the light-blue accent on highlighted phrases. Use the `accent-phrase` component class.
+- **Component classes** in `index.css`: `card`, `card-glow` (with subtle corner-glow gradient), `btn-primary` (phoenix-red pill), `btn-ghost` (outlined), `accent-phrase`, `hairline`.
+- **Heroicons 24/outline** style throughout for visual consistency. Use `20/solid` only for tight chevrons.
+- **Animation pattern:** every page has a top-level scope ref + `useEntrance(scope)`. Add `gsap-fade` to elements you want in the entrance stagger. Hovered/interactive animations use Tailwind transitions, not GSAP.
+- **Hero pattern** for any new page: kicker (`text-xs font-semibold uppercase tracking-[0.18em] text-phoenix-400`) → display heading (`text-display-md sm:text-display-lg`) → subtitle (`text-midnight-300`, with optional `accent-phrase` highlight) → CTA buttons.
 - Pages are self-contained — keep cross-page concerns in `lib/` or `components/`.
 
 ## Decisions log

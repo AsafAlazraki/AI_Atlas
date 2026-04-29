@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import DashboardLayout from './components/DashboardLayout';
 import Dashboard from './pages/Dashboard';
 import Capabilities from './pages/Capabilities';
-import DemoLandscape from './pages/DemoLandscape';
+import Rovo from './pages/capabilities/Rovo';
 import Settings from './pages/Settings';
 
 export default function App() {
@@ -10,10 +10,12 @@ export default function App() {
     <Routes>
       <Route element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
-        <Route path="capabilities" element={<Capabilities />} />
-        <Route path="landscape" element={<DemoLandscape />} />
+        <Route path="capabilities">
+          <Route index element={<Capabilities />} />
+          <Route path="rovo" element={<Rovo />} />
+        </Route>
         <Route path="settings" element={<Settings />} />
-        <Route path="*" element={<Dashboard />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   );
