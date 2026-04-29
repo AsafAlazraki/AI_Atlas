@@ -10,6 +10,7 @@ import {
   CodeBracketIcon,
   BookOpenIcon,
   MegaphoneIcon,
+  CommandLineIcon,
 } from '@heroicons/react/24/outline';
 import type { ComponentType, SVGProps } from 'react';
 
@@ -59,6 +60,14 @@ export const primaryNav: NavEntry[] = [
         icon: UsersIcon,
         description:
           'A team of specialised AI agents that analyse codebases, requirements, and architecture together — each agent owning a domain.',
+      },
+      {
+        type: 'leaf',
+        label: 'GitHub Copilot',
+        to: '/capabilities/github-copilot',
+        icon: CommandLineIcon,
+        description:
+          "GitHub's AI pair programmer — code completion, chat, multi-file planning, and autonomous agents, all where engineers already work.",
       },
       {
         type: 'leaf',
