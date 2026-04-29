@@ -44,7 +44,7 @@ One doc per AI capability shown in the catalog. Doc id = slug = the URL segment.
 ```ts
 type Capability = {
   id: string;             // doc id, same as slug
-  slug: string;           // 'rovo', 'multi-agent-analysis', 'spec-to-design'
+  slug: string;           // 'atlassian-rovo', 'multi-agent-analysis', 'spec-to-design'
   name: string;
   tagline: string;
   description: string;
@@ -116,8 +116,8 @@ Helper:
 ```ts
 import { path } from '../lib/storage';
 
-const videoPath = path.capabilityVideo('rovo', 'intro.mp4');
-//                  → 'capabilities/rovo/videos/intro.mp4'
+const videoPath = path.capabilityVideo('atlassian-rovo', 'intro.mp4');
+//                  → 'capabilities/atlassian-rovo/videos/intro.mp4'
 ```
 
 To resolve a Storage path to a download URL:
@@ -169,7 +169,7 @@ const capRef = col<Capability>('capabilities');
 // → CollectionReference<Capability> for 'dev_capabilities' / 'test_capabilities' / 'prod_capabilities'
 
 // Single doc
-const docR = docRef<Capability>('capabilities', 'rovo');
+const docR = docRef<Capability>('capabilities', 'atlassian-rovo');
 ```
 
 Pattern for fetching a list:

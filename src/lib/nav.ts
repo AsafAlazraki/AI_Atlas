@@ -48,7 +48,7 @@ export const primaryNav: NavEntry[] = [
       {
         type: 'leaf',
         label: 'Atlassian Rovo',
-        to: '/capabilities/rovo',
+        to: '/capabilities/atlassian-rovo',
         icon: RocketLaunchIcon,
         description:
           'AI agents and enterprise search powered by your knowledge — across the SDLC.',
@@ -112,7 +112,7 @@ export const primaryNav: NavEntry[] = [
       {
         type: 'leaf',
         label: 'Release Notes Generation',
-        to: '/capabilities/release-notes',
+        to: '/capabilities/release-notes-generation',
         icon: MegaphoneIcon,
         description:
           'Compose customer-grade release notes from merged PRs and shipped tickets — grouped by audience, written in your voice.',

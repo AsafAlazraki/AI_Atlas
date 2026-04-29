@@ -8,7 +8,7 @@ type Props = {
   /** Optional intro / context line. */
   description?: string;
   /**
-   * Path inside Firebase Storage, e.g. `capabilities/rovo/videos/intro.mp4`.
+   * Path inside Firebase Storage, e.g. `capabilities/atlassian-rovo/videos/intro.mp4`.
    * Leave undefined to render the placeholder.
    */
   storagePath?: string;

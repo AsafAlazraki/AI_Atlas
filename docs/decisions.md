@@ -32,7 +32,7 @@ Eight pages converted to placeholder: MultiAgentAnalysis, GitHubCopilot, CodeRev
 
 ### Rovo → Atlassian Rovo
 
-Display label renamed throughout (sidebar nav, page hero). URL slug stays `/capabilities/rovo` for stability. Page file renamed `Rovo.tsx` → `AtlassianRovo.tsx`; the route and nav both point at the new file.
+Display label renamed throughout (sidebar nav, page hero). URL slug now `/capabilities/atlassian-rovo` (originally was `/capabilities/rovo`, updated in a follow-up so slug matches name). Page file renamed `Rovo.tsx` → `AtlassianRovo.tsx`; the route and nav both point at the new file.
 
 Atlassian Rovo is the single fully-built capability today. It's the canonical reference for any future capability page — when filling in a placeholder, copy its shape.
 
@@ -50,7 +50,7 @@ User added five more capabilities to the catalog and stated the system needs to 
 - **Automated Testing** (`/capabilities/automated-testing`) — generation + maintenance + flake detection.
 - **Documentation Generation** (`/capabilities/documentation-generation`) — READMEs, API refs, ADRs, runbooks.
 - **Claude Design** (`/capabilities/claude-design`) — conversational design with Claude Artifacts.
-- **Release Notes Generation** (`/capabilities/release-notes`) — customer-facing notes from PRs/tickets.
+- **Release Notes Generation** (`/capabilities/release-notes-generation`) — customer-facing notes from PRs/tickets.
 
 Catalog total is now eight capabilities. Roadmap updated: Code Review and Test Generation came off (they're shipped); Legacy Modernisation and Incident Response Copilot replaced them.
 

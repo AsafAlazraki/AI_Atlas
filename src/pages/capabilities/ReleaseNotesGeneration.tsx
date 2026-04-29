@@ -20,7 +20,7 @@
  *  3. (Optional) In action — sample release-note diff
  *
  *  4. Demo video (VideoStage)
- *     - storagePath: path.capabilityVideo('release-notes', '...')
+ *     - storagePath: path.capabilityVideo('release-notes-generation', '...')
  *
  *  5. FAQ (FAQStage)
  *     - Sources? Audience splitting? Voice? PM/marketing fit? Distribution?
@@ -29,7 +29,7 @@
  */
 import CapabilityComingSoon from '../../components/CapabilityComingSoon';
 
-export default function ReleaseNotes() {
+export default function ReleaseNotesGeneration() {
   return (
     <CapabilityComingSoon
       kicker="AI Capabilities · PhoenixDX"

@@ -1,19 +1,17 @@
 import {
-  MagnifyingGlassIcon,
-  CpuChipIcon,
+  DocumentTextIcon,
+  ClipboardDocumentListIcon,
   BoltIcon,
-  Squares2X2Icon,
 } from '@heroicons/react/24/outline';
 import Slideshow from '../../components/Slideshow';
 import HeroStage, {
   HeroStats,
   HeroStat,
 } from '../../components/slideshow/HeroStage';
-import ContentStage, {
-  FeatureGrid,
-  FeatureCard,
-} from '../../components/slideshow/ContentStage';
-import VideoStage from '../../components/slideshow/VideoStage';
+import ContentStage from '../../components/slideshow/ContentStage';
+import VideoGridStage, {
+  type GridVideo,
+} from '../../components/slideshow/VideoGridStage';
 import FAQStage, { type FAQItem } from '../../components/slideshow/FAQStage';
 import type { SlideshowStage } from '../../types/slideshow';
 
@@ -24,6 +22,34 @@ const sdlcStages = [
   { stage: 'Test', use: 'Triage incoming bugs, suggest reproduction steps, and link related tickets.' },
   { stage: 'Deploy', use: 'Auto-compose release notes from merged PRs and Jira tickets.' },
   { stage: 'Operate', use: 'Triage incidents and recall the last time something similar happened.' },
+];
+
+const demoVideos: GridVideo[] = [
+  {
+    id: 'overview',
+    title: 'Rovo in 2 minutes',
+    description: 'A quick walkthrough of Rovo answering questions across Jira, Confluence, and GitHub.',
+    durationLabel: '2:14',
+    // storagePath: path.capabilityVideo('atlassian-rovo', 'overview.mp4')
+  },
+  {
+    id: 'confluence',
+    title: 'Rovo in Confluence',
+    description: 'Search, summarise, and draft new pages without leaving the space you are in.',
+    durationLabel: '3:02',
+  },
+  {
+    id: 'jira',
+    title: 'Rovo in Jira',
+    description: 'Triage, link, and auto-draft tickets and release notes directly from the board.',
+    durationLabel: '2:48',
+  },
+  {
+    id: 'custom-agents',
+    title: 'Building a custom agent',
+    description: 'Create a skill-based agent that bridges Confluence and Jira on a real workflow.',
+    durationLabel: '4:21',
+  },
 ];
 
 const faqs: FAQItem[] = [
@@ -37,7 +63,7 @@ const faqs: FAQItem[] = [
     id: 'permissions',
     question: 'How does Rovo handle permissions?',
     answer:
-      "Rovo respects every source system's ACLs. Users only see answers and references they already have permission to read in the underlying tool — there is no permission elevation. PhoenixDX hardens this further during deployment.",
+      "Rovo respects every source system's ACLs. Users only see answers and references they already have permission to read in the underlying tool — no permission elevation. PhoenixDX hardens this further during deployment.",
   },
   {
     id: 'agents',
@@ -64,7 +90,7 @@ function Overview() {
     <HeroStage
       kicker="AI Capabilities · Atlassian"
       title="Atlassian Rovo —"
-      titleAccent="AI grounded in your knowledge"
+      titleAccent="grounded in your knowledge"
       tagline="Rovo connects to the tools your teams already use — Jira, Confluence, GitHub, Slack and beyond — to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC."
     >
       <HeroStats>
@@ -91,33 +117,105 @@ function Overview() {
 function HowItWorks() {
   return (
     <ContentStage
-      eyebrow="Capabilities"
-      heading="What Rovo does"
-      subtitle="Four modes, one connected experience."
+      eyebrow="How it works"
+      heading="One assistant across the Atlassian suite"
+      subtitle="Rovo lives where your teams already work — and PhoenixDX builds custom agents that bridge the surfaces."
     >
-      <FeatureGrid>
-        <FeatureCard
-          icon={MagnifyingGlassIcon}
-          heading="Enterprise search"
-          body="Find anything across the tools your teams already use — answers grounded in your team's actual work, not the public internet."
-        />
-        <FeatureCard
-          icon={CpuChipIcon}
-          heading="Rovo Agents"
-          body="Skill-based AI teammates that take initiative — drafting tickets, summarising standups, reviewing PRs, generating release notes."
-        />
-        <FeatureCard
-          icon={BoltIcon}
-          heading="Workflow automation"
-          body="Trigger agents on Jira transitions, schedule recurring summaries, and chain tools together with natural-language prompts."
-        />
-        <FeatureCard
-          icon={Squares2X2Icon}
-          heading="Built on your knowledge"
-          body="Permission-aware retrieval, fine-grained sources, and audit trails — every answer is traceable and safe to act on."
-        />
-      </FeatureGrid>
+      <div className="flex h-full flex-col gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <SurfaceCard
+            icon={DocumentTextIcon}
+            surface="Rovo in Confluence"
+            items={[
+              'Search across spaces with answers grounded in your team\'s actual writing.',
+              'Summarise long pages — and the threads that produced them.',
+              'Generate ADRs from decision discussions and meeting notes.',
+              'Draft new pages from a brief; refine in plain English.',
+            ]}
+          />
+          <SurfaceCard
+            icon={ClipboardDocumentListIcon}
+            surface="Rovo in Jira"
+            items={[
+              'Triage incoming bugs and link related tickets automatically.',
+              'Suggest reproduction steps and likely owners.',
+              'Compose release notes from completed tickets in one pass.',
+              'Draft tickets from acceptance criteria or Slack threads.',
+            ]}
+          />
+        </div>
+
+        <CustomAgentsBlock />
+      </div>
     </ContentStage>
+  );
+}
+
+function SurfaceCard({
+  icon: Icon,
+  surface,
+  items,
+}: {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  surface: string;
+  items: string[];
+}) {
+  return (
+    <article className="rounded-2xl border border-midnight-700/60 bg-midnight-900/40 p-5">
+      <div className="flex items-center gap-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-azure-300/10 text-azure-300 ring-1 ring-inset ring-azure-300/30">
+          <Icon className="h-5 w-5" aria-hidden="true" />
+        </div>
+        <h3 className="text-base font-semibold text-white">{surface}</h3>
+      </div>
+      <ul className="mt-3 space-y-1.5">
+        {items.map((item) => (
+          <li key={item} className="flex gap-2 text-sm text-midnight-200">
+            <span
+              className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-azure-300/70"
+              aria-hidden="true"
+            />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+function CustomAgentsBlock() {
+  const examples = [
+    'Weekly digest agents',
+    'Change-management ushers',
+    'On-call summarisers',
+    'Cross-team status pulses',
+  ];
+  return (
+    <article className="rounded-2xl border border-phoenix-500/30 bg-gradient-to-br from-phoenix-500/5 via-midnight-900/40 to-midnight-900/40 p-5">
+      <div className="flex items-start gap-4">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-phoenix-500/15 text-phoenix-300 ring-1 ring-inset ring-phoenix-500/40">
+          <BoltIcon className="h-5 w-5" aria-hidden="true" />
+        </div>
+        <div className="flex-1">
+          <h3 className="text-base font-semibold text-white">Custom Rovo Agents</h3>
+          <p className="mt-1 text-sm text-midnight-300">
+            Build skill-based agents that bridge Confluence and Jira — triggered by Jira
+            transitions, schedules, or page edits. PhoenixDX designs, builds, and maintains
+            your custom agents.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {examples.map((ex) => (
+              <span
+                key={ex}
+                className="inline-flex items-center rounded-full bg-midnight-800/80 px-2.5 py-1 text-[11px] font-medium text-midnight-200 ring-1 ring-inset ring-midnight-700"
+              >
+                {ex}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
 
@@ -147,19 +245,16 @@ function AcrossTheSDLC() {
 
 const stages: SlideshowStage[] = [
   { id: 'overview', label: 'Overview', content: <Overview /> },
-  { id: 'capabilities', label: 'How it works', content: <HowItWorks /> },
+  { id: 'how', label: 'How it works', content: <HowItWorks /> },
   { id: 'sdlc', label: 'Across the SDLC', content: <AcrossTheSDLC /> },
   {
     id: 'demo',
-    label: 'Demo video',
+    label: 'Demo videos',
     content: (
-      <VideoStage
-        heading="Rovo in 2 minutes"
-        description="A quick walkthrough of Rovo answering questions across Jira, Confluence, and GitHub."
-        // When a video is uploaded, set storagePath here:
-        // storagePath={path.capabilityVideo('rovo', 'intro.mp4')}
-        storagePath={undefined}
-        durationLabel="2:14"
+      <VideoGridStage
+        heading="Watch Rovo in action"
+        description="Click a video to play. More demos land here as customer engagements ship."
+        videos={demoVideos}
       />
     ),
   },

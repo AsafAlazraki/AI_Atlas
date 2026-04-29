@@ -10,7 +10,7 @@ import AutomatedTesting from './pages/capabilities/AutomatedTesting';
 import DocumentationGeneration from './pages/capabilities/DocumentationGeneration';
 import SpecToDesign from './pages/capabilities/SpecToDesign';
 import ClaudeDesign from './pages/capabilities/ClaudeDesign';
-import ReleaseNotes from './pages/capabilities/ReleaseNotes';
+import ReleaseNotesGeneration from './pages/capabilities/ReleaseNotesGeneration';
 import Settings from './pages/Settings';
 
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
         <Route index element={<Dashboard />} />
         <Route path="capabilities">
           <Route index element={<Capabilities />} />
-          <Route path="rovo" element={<AtlassianRovo />} />
+          <Route path="atlassian-rovo" element={<AtlassianRovo />} />
           <Route path="multi-agent-analysis" element={<MultiAgentAnalysis />} />
           <Route path="github-copilot" element={<GitHubCopilot />} />
           <Route path="code-review" element={<CodeReview />} />
@@ -28,7 +28,7 @@ export default function App() {
           <Route path="documentation-generation" element={<DocumentationGeneration />} />
           <Route path="spec-to-design" element={<SpecToDesign />} />
           <Route path="claude-design" element={<ClaudeDesign />} />
-          <Route path="release-notes" element={<ReleaseNotes />} />
+          <Route path="release-notes-generation" element={<ReleaseNotesGeneration />} />
         </Route>
         <Route path="settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -108,7 +108,7 @@ export default function CapabilityComingSoon({
         </div>
 
         <div className="gsap-fade mt-8 flex flex-wrap items-center gap-3">
-          <Link to="/capabilities/rovo" className="btn-primary">
+          <Link to="/capabilities/atlassian-rovo" className="btn-primary">
             See Atlassian Rovo as a built example
             <ArrowRightIcon className="h-4 w-4" />
           </Link>
