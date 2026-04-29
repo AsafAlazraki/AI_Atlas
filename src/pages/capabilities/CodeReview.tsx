@@ -1,5 +1,5 @@
 /**
- * Code Review — placeholder until content is filled in.
+ * Code Review. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
@@ -7,7 +7,7 @@
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Code" + accent "Review"
  *     - tagline: A project-aware code-review agent that catches what static
- *       analysis misses — security drift, architectural violations, team
+ *       analysis misses: security drift, architectural violations, team
  *       conventions. Senior engineers stop being a bottleneck on every typo.
  *     - 3 stat cards: Coverage / Senior time saved / Latency
  *
@@ -36,7 +36,7 @@ export default function CodeReview() {
       kicker="AI Capabilities · PhoenixDX"
       title="Code"
       titleAccent="Review"
-      tagline="A project-aware code-review agent that catches what static analysis misses — security drift, architectural violations, and team-specific conventions. Turns your senior engineers into the second pair of eyes on every PR, instead of the only pair."
+      tagline="A project-aware code-review agent that catches what static analysis misses: security drift, architectural violations, and team-specific conventions. Turns your senior engineers into the second pair of eyes on every PR, instead of the only pair."
     />
   );
 }

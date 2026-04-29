@@ -8,7 +8,7 @@ type Props = {
 };
 
 /**
- * Top progress nav for a Slideshow. Renders one segment per stage —
+ * Top progress nav for a Slideshow. Renders one segment per stage:
  * past = filled phoenix, current = filled bright phoenix, upcoming = dim.
  * Each segment is a button: clicking jumps to that stage.
  */

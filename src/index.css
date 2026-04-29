@@ -46,7 +46,7 @@
 }
 
 @layer components {
-  /* Card surface — slightly elevated above the page bg with a soft inner highlight */
+  /* Card surface, slightly elevated above the page bg with a soft inner highlight */
   .card {
     @apply relative rounded-2xl border border-midnight-700/60 bg-midnight-800/60 shadow-card backdrop-blur;
   }
@@ -59,7 +59,7 @@
       linear-gradient(180deg, rgb(15 23 42 / 0.6), rgb(15 23 42 / 0.6));
   }
 
-  /* Pill CTA — phoenix-dx.com style */
+  /* Pill CTA, phoenix-dx.com style */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full bg-phoenix-cta px-6 py-3 text-sm font-semibold text-white shadow-phoenix-glow-soft transition-all duration-200 hover:shadow-phoenix-glow hover:brightness-110 active:scale-[0.98];
   }

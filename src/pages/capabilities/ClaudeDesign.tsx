@@ -1,12 +1,12 @@
 /**
- * Claude Design — placeholder until content is filled in.
+ * Claude Design. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
  *  1. Overview (HeroStage)
  *     - kicker: "AI Capabilities · Anthropic"
  *     - title: "Claude" + accent "Design"
- *     - tagline: Conversational design with Claude — generate live,
+ *     - tagline: Conversational design with Claude. Generate live,
  *       interactive UI directly from a brief and iterate in plain English.
  *     - 3 stat cards: Time to first artifact / Iterations per session / Output format
  *
@@ -16,7 +16,7 @@
  *     - Copy iteration (CursorArrowRaysIcon)
  *     - Prototyping (Squares2X2Icon)
  *
- *  3. (Optional) In action — example: settings page in 3 minutes
+ *  3. (Optional) In action: example settings page in 3 minutes
  *
  *  4. Demo video (VideoStage)
  *     - storagePath: path.capabilityVideo('claude-design', '...')
@@ -35,7 +35,7 @@ export default function ClaudeDesign() {
       kicker="AI Capabilities · Anthropic"
       title="Claude"
       titleAccent="Design"
-      tagline="Conversational design with Claude — generate live, interactive UI directly from a brief. Iterate in plain English, get a working component back in seconds, and copy it into your codebase or your design system."
+      tagline="Conversational design with Claude. Generate live, interactive UI directly from a brief, iterate in plain English, and get a working component back in seconds, ready to copy into your codebase or your design system."
     />
   );
 }

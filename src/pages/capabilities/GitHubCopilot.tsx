@@ -1,13 +1,13 @@
 /**
- * GitHub Copilot — placeholder until content is filled in.
+ * GitHub Copilot. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
  *  1. Overview (HeroStage)
  *     - kicker: "AI Capabilities · GitHub"
  *     - title: "GitHub" + accent "Copilot"
- *     - tagline: An AI pair programmer that lives where engineers already
- *       work — VS Code, JetBrains, Visual Studio, GitHub. Code completion,
+ *     - tagline: A pair programmer that lives where engineers already
+ *       work (VS Code, JetBrains, Visual Studio, GitHub): code completion,
  *       chat, multi-step planning, and autonomous agents in one platform.
  *     - 3 stat cards: Surface area / Model choice / Adoption velocity
  *
@@ -36,7 +36,7 @@ export default function GitHubCopilot() {
       kicker="AI Capabilities · GitHub"
       title="GitHub"
       titleAccent="Copilot"
-      tagline="An AI pair programmer that lives where your engineers already work — VS Code, JetBrains, Visual Studio, and GitHub. Code completion, chat, multi-step planning, and autonomous agents in one platform. PhoenixDX deploys Copilot for enterprises that want measurable lift without forcing a tooling change."
+      tagline="A pair programmer that lives where your engineers already work (VS Code, JetBrains, Visual Studio, GitHub). Code completion, chat, multi-step planning, and autonomous agents in one platform. PhoenixDX deploys Copilot for enterprises that want measurable lift without forcing a tooling change."
     />
   );
 }

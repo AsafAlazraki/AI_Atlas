@@ -10,7 +10,7 @@ export type FAQ = {
   /** Capability this FAQ belongs to. */
   capabilityId: string;
   question: string;
-  /** Plain text or short markdown — the FAQ component renders as text today. */
+  /** Plain text or short markdown. The FAQ component renders as text today. */
   answer: string;
   order: number;
   createdAt: Timestamp | string;

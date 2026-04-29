@@ -1,5 +1,5 @@
 /**
- * Spec to Design — placeholder until content is filled in.
+ * Spec to Design. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
@@ -7,17 +7,17 @@
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Spec to" + accent "Design"
  *     - tagline: Turn product requirements and user stories into Figma-ready
- *       wireframes and high-fidelity designs in minutes — grounded in your
+ *       wireframes and high-fidelity designs in minutes, grounded in your
  *       design system, not someone else's.
  *     - 3 stat cards: Time to v0 / Design system fidelity / Iteration speed
  *
  *  2. The pipeline (ContentStage + FeatureGrid 2x2)
- *     - 1 — Parse spec (DocumentTextIcon)
- *     - 2 — Map flows (ArrowsRightLeftIcon)
- *     - 3 — Wireframe (Squares2X2Icon)
- *     - 4 — Apply design system (PaintBrushIcon)
+ *     - 1. Parse spec (DocumentTextIcon)
+ *     - 2. Map flows (ArrowsRightLeftIcon)
+ *     - 3. Wireframe (Squares2X2Icon)
+ *     - 4. Apply design system (PaintBrushIcon)
  *
- *  3. In action — example settings page from a real engagement
+ *  3. In action: example settings page from a real engagement
  *
  *  4. Demo video (VideoStage)
  *     - storagePath: path.capabilityVideo('spec-to-design', '...')
@@ -35,7 +35,7 @@ export default function SpecToDesign() {
       kicker="AI Capabilities · PhoenixDX"
       title="Spec to"
       titleAccent="Design"
-      tagline="Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes — grounded in your design system, not someone else's."
+      tagline="Turn product requirements and user stories into Figma-ready wireframes and high-fidelity designs in minutes, grounded in your design system, not someone else's."
     />
   );
 }

@@ -9,7 +9,7 @@ type Props = {
   kicker: string;
   title: string;
   titleAccent?: string;
-  /** Long-form description of the capability — shown beneath the title. */
+  /** Long-form description of the capability. Shown beneath the title. */
   tagline: string;
 };
 
@@ -21,7 +21,7 @@ type Props = {
  * the catalog or to a built reference example (Atlassian Rovo).
  *
  * The page file that uses this should keep a top-level comment block
- * describing the intended slideshow stage structure — so the next
+ * describing the intended slideshow stage structure, so the next
  * contributor can fill in content directly.
  */
 export default function CapabilityComingSoon({

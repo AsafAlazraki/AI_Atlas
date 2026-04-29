@@ -3,13 +3,13 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 /**
- * Global animated background — flowing dotted wireframe curves like phoenix-dx.com.
+ * Global animated background. Flowing dotted wireframe curves like phoenix-dx.com.
  * Sits fixed behind all content (z-index: -10), pointer-events: none.
  *
  * Two SVG paths animate independently: their stroke-dashoffset cycles to
  * create a "flowing" effect, and they translate slowly to add motion.
  *
- * Respects prefers-reduced-motion — all tweens skip when set.
+ * Respects prefers-reduced-motion (all tweens skip when set).
  */
 export default function AnimatedBackground() {
   const ref = useRef<SVGSVGElement>(null);
@@ -19,7 +19,7 @@ export default function AnimatedBackground() {
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduced) return;
 
-      // Flow effect — dash offset moves continuously
+      // Flow effect: dash offset moves continuously
       gsap.to('.bg-flow-azure', {
         attr: { 'stroke-dashoffset': -300 },
         duration: 10,

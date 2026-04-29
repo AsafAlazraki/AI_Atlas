@@ -63,13 +63,13 @@ const faqs: FAQItem[] = [
     id: 'permissions',
     question: 'How does Rovo handle permissions?',
     answer:
-      "Rovo respects every source system's ACLs. Users only see answers and references they already have permission to read in the underlying tool — no permission elevation. PhoenixDX hardens this further during deployment.",
+      "Rovo respects every source system's ACLs. Users only see answers and references they already have permission to read in the underlying tool, with no permission elevation. PhoenixDX hardens this further during deployment.",
   },
   {
     id: 'agents',
     question: 'How are Rovo Agents different from chat?',
     answer:
-      'Agents are skill-based teammates that take initiative on a defined job — drafting tickets, summarising standups, reviewing PRs, generating release notes. Chat is reactive; agents are proactive and run on triggers or schedules.',
+      'Agents are skill-based teammates that take initiative on a defined job: drafting tickets, summarising standups, reviewing PRs, generating release notes. Chat is reactive; agents are proactive and run on triggers or schedules.',
   },
   {
     id: 'data',
@@ -89,9 +89,9 @@ function Overview() {
   return (
     <HeroStage
       kicker="AI Capabilities · Atlassian"
-      title="Atlassian Rovo —"
+      title="Atlassian Rovo,"
       titleAccent="grounded in your knowledge"
-      tagline="Rovo connects to the tools your teams already use — Jira, Confluence, GitHub, Slack and beyond — to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC."
+      tagline="Rovo connects to the tools your teams already use (Jira, Confluence, GitHub, Slack and beyond) to find, learn, and act on the work happening across your organisation. PhoenixDX deploys Rovo as a productivity multiplier across every stage of the SDLC."
     >
       <HeroStats>
         <HeroStat
@@ -119,7 +119,7 @@ function HowItWorks() {
     <ContentStage
       eyebrow="How it works"
       heading="One assistant across the Atlassian suite"
-      subtitle="Rovo lives where your teams already work — and PhoenixDX builds custom agents that bridge the surfaces."
+      subtitle="Rovo lives where your teams already work. PhoenixDX builds custom agents that bridge the surfaces."
     >
       <div className="flex h-full flex-col gap-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -128,7 +128,7 @@ function HowItWorks() {
             surface="Rovo in Confluence"
             items={[
               'Search across spaces with answers grounded in your team\'s actual writing.',
-              'Summarise long pages — and the threads that produced them.',
+              'Summarise long pages, including the threads that produced them.',
               'Generate ADRs from decision discussions and meeting notes.',
               'Draft new pages from a brief; refine in plain English.',
             ]}
@@ -199,7 +199,7 @@ function CustomAgentsBlock() {
         <div className="flex-1">
           <h3 className="text-base font-semibold text-white">Custom Rovo Agents</h3>
           <p className="mt-1 text-sm text-midnight-300">
-            Build skill-based agents that bridge Confluence and Jira — triggered by Jira
+            Build skill-based agents that bridge Confluence and Jira, triggered by Jira
             transitions, schedules, or page edits. PhoenixDX designs, builds, and maintains
             your custom agents.
           </p>

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 type Props = {
   /** Eyebrow line above the title (e.g., "AI Capabilities · Atlassian"). */
   kicker: string;
-  /** Main title text — keep it short. */
+  /** Main title text. Keep it short. */
   title: string;
   /** Optional accent phrase rendered with the .accent-phrase azure colour. */
   titleAccent?: string;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 /**
- * Stage 1 of every capability slideshow — the intro + overview.
+ * Stage 1 of every capability slideshow: the intro + overview.
  *
  * Layout: kicker → display heading → tagline → optional children.
  * Designed to fit one viewport at any reasonable window size.

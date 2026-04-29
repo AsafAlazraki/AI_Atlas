@@ -20,11 +20,11 @@ export function resolveVideoUrl(path: string): Promise<string> {
   return getDownloadURL(ref(storage, path));
 }
 
-/** Alias — same logic, distinct intent for image assets. */
+/** Alias. Same logic, distinct intent for image assets. */
 export const resolveImageUrl = resolveVideoUrl;
 
 /**
- * Upload a file to a given Storage path. Admin-only — protected by
+ * Upload a file to a given Storage path. Admin-only, protected by
  * storage.rules. Returns the resolved download URL on success.
  */
 export async function uploadFile(path: string, file: File | Blob): Promise<string> {

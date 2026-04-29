@@ -15,7 +15,7 @@ type Props = {
  * Fills its container (h-full) so the stage occupies one viewport with
  * no scroll. Header is fixed-height; body grows to fill the remainder.
  *
- * Stages MUST be designed to fit one viewport — if your content
+ * Stages MUST be designed to fit one viewport. If your content
  * overflows, redesign it (split across stages, drop a row, tighten copy).
  * Don't add overflow-y-auto.
  */

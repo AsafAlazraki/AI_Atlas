@@ -10,7 +10,7 @@ export type Video = {
   id: string;
   /** Capability this video belongs to. */
   capabilityId: string;
-  /** Display title — shown above the player. */
+  /** Display title. Shown above the player. */
   title: string;
   /** Optional description shown beneath the title. */
   description?: string;
@@ -18,7 +18,7 @@ export type Video = {
   storagePath: string;
   /** Optional Storage path to a poster image. */
   posterPath?: string;
-  /** Optional duration label, e.g. "2:14" — purely for display. */
+  /** Optional duration label, e.g. "2:14". Purely for display. */
   durationLabel?: string;
   /** Order within the capability (low = first). */
   order: number;

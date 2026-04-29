@@ -23,7 +23,7 @@ type Props = {
  * lazily on mount. While loading, shows a skeleton. If `storagePath`
  * is omitted entirely, renders the "video coming soon" placeholder.
  *
- * Sized to fit one viewport — header on top, video fills remaining space.
+ * Sized to fit one viewport (header on top, video fills remaining space).
  */
 export default function VideoStage({
   heading,
@@ -59,7 +59,7 @@ export default function VideoStage({
         if (!cancelled) setPoster(url);
       })
       .catch(() => {
-        // Poster is optional — silently ignore failures.
+        // Poster is optional. Silently ignore failures.
       });
     return () => {
       cancelled = true;

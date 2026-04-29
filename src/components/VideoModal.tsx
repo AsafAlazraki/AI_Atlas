@@ -55,7 +55,7 @@ export default function VideoModal({ video, onClose }: Props) {
         if (!cancelled) setPoster(url);
       })
       .catch(() => {
-        // Poster is optional — silent fail.
+        // Poster is optional. Silent fail.
       });
     return () => {
       cancelled = true;

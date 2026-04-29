@@ -10,7 +10,7 @@ import { firestorePrefix } from './env';
 
 /**
  * Resolve a collection reference for the active environment.
- * Always go through this — never call collection(db, name) directly,
+ * Always go through this. Never call collection(db, name) directly,
  * or you risk reading/writing the wrong env's data.
  */
 export function col<T = DocumentData>(name: string): CollectionReference<T> {

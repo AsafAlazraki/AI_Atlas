@@ -1,5 +1,5 @@
 /**
- * Automated Testing — placeholder until content is filled in.
+ * Automated Testing. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
@@ -7,8 +7,8 @@
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Automated" + accent "Testing"
  *     - tagline: Generate, maintain, and de-flake unit / integration / E2E
- *       tests from specs and existing code paths. The goal isn't more tests
- *       — it's tests you trust.
+ *       tests from specs and existing code paths. The goal isn't more tests;
+ *       it's tests you trust.
  *     - 3 stat cards: Generation / Maintenance / Trust (flake-free)
  *
  *  2. The pipeline (ContentStage + FeatureGrid 2x2)
@@ -36,7 +36,7 @@ export default function AutomatedTesting() {
       kicker="AI Capabilities · PhoenixDX"
       title="Automated"
       titleAccent="Testing"
-      tagline="Generate unit, integration and end-to-end tests from specs and existing code paths — then keep them green as the codebase evolves. Less brittle than record-and-playback, smarter than scaffolded test stubs."
+      tagline="Generate unit, integration and end-to-end tests from specs and existing code paths, then keep them green as the codebase evolves. Less brittle than record-and-playback, smarter than scaffolded test stubs."
     />
   );
 }

@@ -14,7 +14,7 @@ const INNER_RADIUS = 132;
  *  - Soft halo blurs (CSS)
  *  - Three pulsing/expanding rings
  *  - Two orbital rings of particles, counter-rotating
- *  - Centre PhoenixDX icon — slow breathing scale
+ *  - Centre PhoenixDX icon (slow breathing scale)
  *
  * Respects prefers-reduced-motion (skips all GSAP tweens, renders static).
  */
@@ -51,7 +51,7 @@ export default function PhoenixVisual() {
         repeat: -1,
       });
 
-      // Pulse rings — staggered ripple
+      // Pulse rings: staggered ripple
       gsap.fromTo(
         '.pv-ring',
         { scale: 0.55, opacity: 0.55, transformOrigin: '200px 200px' },
@@ -119,7 +119,7 @@ export default function PhoenixVisual() {
         <circle cx="200" cy="200" r={OUTER_RADIUS} fill="none" stroke="#1E293B" strokeWidth="0.5" strokeDasharray="2 6" />
         <circle cx="200" cy="200" r={INNER_RADIUS} fill="none" stroke="#1E293B" strokeWidth="0.5" strokeDasharray="1 5" />
 
-        {/* Outer orbit — phoenix particles */}
+        {/* Outer orbit: phoenix particles */}
         <g className="pv-orbit-outer">
           {Array.from({ length: OUTER_COUNT }).map((_, i) => {
             const a = (i * 360) / OUTER_COUNT;
@@ -138,7 +138,7 @@ export default function PhoenixVisual() {
           })}
         </g>
 
-        {/* Inner orbit — azure particles */}
+        {/* Inner orbit: azure particles */}
         <g className="pv-orbit-inner">
           {Array.from({ length: INNER_COUNT }).map((_, i) => {
             const a = (i * 360) / INNER_COUNT;

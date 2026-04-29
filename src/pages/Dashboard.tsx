@@ -62,9 +62,9 @@ export default function Dashboard() {
             />
           </h1>
           <p className="gsap-fade mt-5 max-w-xl text-base text-midnight-300 sm:text-lg">
-            A demo landscape showcasing PhoenixDX&apos;s AI capabilities across
-            the software development lifecycle — discovery, design, build, test,
-            deploy, operate.
+            A demo landscape showcasing PhoenixDX&apos;s capabilities across
+            every stage of the software development lifecycle: discovery, design,
+            build, test, deploy, operate.
           </p>
           <div className="gsap-fade mt-8 flex flex-wrap items-center gap-3">
             <Link to="/capabilities" className="btn-primary">

@@ -78,7 +78,7 @@ function BrandHeader({
   return (
     <div className="flex h-16 items-center justify-between gap-2 border-b border-midnight-800/80 px-3">
       <div className="flex min-w-0 flex-1 items-center md:justify-start">
-        {/* Wordmark — visible everywhere except desktop-collapsed */}
+        {/* Wordmark: visible everywhere except desktop-collapsed */}
         <img
           src="/phoenixdx-wordmark.png"
           alt="PhoenixDX"
@@ -88,7 +88,7 @@ function BrandHeader({
             collapsed && 'md:hidden',
           )}
         />
-        {/* Icon-only — desktop-collapsed */}
+        {/* Icon-only on desktop when collapsed */}
         {collapsed && (
           <img
             src="/phoenixdx-icon.jpg"

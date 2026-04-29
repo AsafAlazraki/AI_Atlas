@@ -35,12 +35,12 @@ type Props = {
   eraseMs?: number;
   /** Pause between erase finish and next phrase start (ms). Default 900. */
   pauseMs?: number;
-  /** Wrapper class — defaults to .accent-phrase from index.css */
+  /** Wrapper class. Defaults to .accent-phrase from index.css */
   className?: string;
 };
 
 /**
- * Typewriter cycle through several phrases — like the phoenix-dx.com hero
+ * Typewriter cycle through several phrases, like the phoenix-dx.com hero
  * (`AI-powered software development` → `digital innovation` → ...).
  *
  * Renders a span containing the current text plus a blinking cursor.

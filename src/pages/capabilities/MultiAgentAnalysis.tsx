@@ -1,15 +1,15 @@
 /**
- * Multi Agent Analysis — placeholder until content is filled in.
+ * Multi Agent Analysis. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
  *  1. Overview (HeroStage)
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Multi Agent" + accent "Analysis"
- *     - tagline: A team of specialised AI agents that analyse a codebase,
- *       requirement set, or architecture together — each agent owning a domain
- *       (security, performance, accessibility, business logic) and converging
- *       on a single, evidence-backed report.
+ *     - tagline: A team of specialised agents that analyse a codebase,
+ *       requirement set, or architecture together. Each agent owns a domain
+ *       (security, performance, accessibility, business logic) and they
+ *       converge on a single, evidence-backed report.
  *     - 3 stat cards: Specialise / Run in parallel / Reconcile
  *
  *  2. How it works (ContentStage + custom 5-step list)
@@ -38,7 +38,7 @@ export default function MultiAgentAnalysis() {
       kicker="AI Capabilities · PhoenixDX"
       title="Multi Agent"
       titleAccent="Analysis"
-      tagline="A team of specialised AI agents that analyse a codebase, requirement set, or architecture together — each agent owning a domain (security, performance, accessibility, business logic) and converging on a single, evidence-backed report."
+      tagline="A team of specialised agents that analyse a codebase, requirement set, or architecture together. Each agent owns a domain (security, performance, accessibility, business logic) and they converge on a single, evidence-backed report."
     />
   );
 }

@@ -13,22 +13,22 @@ const comingSoon: ComingSoon[] = [
   {
     title: 'Requirements Copilot',
     description:
-      'Turn discovery conversations into structured user stories, acceptance criteria, and test scenarios — grounded in your domain context.',
+      'Turn discovery conversations into structured user stories, acceptance criteria, and test scenarios, grounded in your domain context.',
   },
   {
     title: 'Legacy Modernisation',
     description:
-      'AI-assisted migration of legacy codebases — modernise frameworks, languages, and architectures incrementally without freezing the team.',
+      'Assisted migration of legacy codebases. Modernise frameworks, languages, and architectures incrementally without freezing the team.',
   },
   {
     title: 'Incident Response Copilot',
     description:
-      'Triage incoming alerts, recall similar past incidents, and suggest remediations from runbooks + telemetry.',
+      'Triage incoming alerts, recall similar past incidents, and suggest remediations from runbooks and telemetry.',
   },
   {
     title: 'Observability Insights',
     description:
-      'Surface anomalies, root causes, and remediation suggestions from production telemetry — in plain English.',
+      'Surface anomalies, root causes, and remediation suggestions from production telemetry, in plain English.',
   },
 ];
 
@@ -51,7 +51,7 @@ export default function Capabilities() {
         </h1>
         <p className="gsap-fade mt-4 max-w-2xl text-midnight-300">
           The AI capabilities PhoenixDX has productionised across the SDLC.
-          Pick one to see how it works in context — more being added every week.
+          Pick one to see how it works in context. More being added every week.
         </p>
       </header>
 

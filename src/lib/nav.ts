@@ -51,7 +51,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/atlassian-rovo',
         icon: RocketLaunchIcon,
         description:
-          'AI agents and enterprise search powered by your knowledge — across the SDLC.',
+          'Agents and enterprise search powered by your knowledge, across the SDLC.',
       },
       {
         type: 'leaf',
@@ -59,7 +59,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/multi-agent-analysis',
         icon: UsersIcon,
         description:
-          'A team of specialised AI agents that analyse codebases, requirements, and architecture together — each agent owning a domain.',
+          'A team of specialised agents that analyse codebases, requirements, and architecture together, each owning a domain.',
       },
       {
         type: 'leaf',
@@ -67,7 +67,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/github-copilot',
         icon: CommandLineIcon,
         description:
-          "GitHub's AI pair programmer — code completion, chat, multi-file planning, and autonomous agents, all where engineers already work.",
+          "GitHub's pair programmer for engineers: code completion, chat, multi-file planning, and autonomous agents, all where they already work.",
       },
       {
         type: 'leaf',
@@ -75,7 +75,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/code-review',
         icon: CodeBracketIcon,
         description:
-          'Project-aware PR review that catches what static analysis misses — security drift, architecture violations, and team conventions.',
+          'Project-aware PR review that catches what static analysis misses: security drift, architecture violations, and team conventions.',
       },
       {
         type: 'leaf',
@@ -83,7 +83,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/automated-testing',
         icon: BeakerIcon,
         description:
-          'Generate, maintain, and de-flake unit / integration / E2E tests — keeping suites green as the codebase evolves.',
+          'Generate, maintain, and de-flake unit, integration, and E2E tests, keeping suites green as the codebase evolves.',
       },
       {
         type: 'leaf',
@@ -91,7 +91,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/documentation-generation',
         icon: BookOpenIcon,
         description:
-          'Auto-generate READMEs, API references, ADRs, and runbooks — and keep them in sync as code evolves.',
+          'Auto-generate READMEs, API references, ADRs, and runbooks, then keep them in sync as code evolves.',
       },
       {
         type: 'leaf',
@@ -107,7 +107,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/claude-design',
         icon: SwatchIcon,
         description:
-          'Conversational design with Claude — generate live, interactive UI directly from a brief and iterate in plain English.',
+          'Conversational design with Claude: generate live, interactive UI directly from a brief and iterate in plain English.',
       },
       {
         type: 'leaf',
@@ -115,7 +115,7 @@ export const primaryNav: NavEntry[] = [
         to: '/capabilities/release-notes-generation',
         icon: MegaphoneIcon,
         description:
-          'Compose customer-grade release notes from merged PRs and shipped tickets — grouped by audience, written in your voice.',
+          'Compose customer-grade release notes from merged PRs and shipped tickets, grouped by audience, written in your voice.',
       },
     ],
   },
@@ -126,13 +126,13 @@ export const footerNav: NavEntry[] = [
   { type: 'leaf', label: 'Settings', to: '/settings', icon: Cog6ToothIcon },
 ];
 
-/** Flat list of every leaf — used by the topbar to resolve the current page title. */
+/** Flat list of every leaf, used by the topbar to resolve the current page title. */
 export const allLeaves: NavLeaf[] = [
   ...primaryNav.flatMap((e) => (e.type === 'leaf' ? [e] : e.children)),
   ...footerNav.flatMap((e) => (e.type === 'leaf' ? [e] : e.children)),
 ];
 
-/** All capability leaves — used to render the Capabilities overview. */
+/** All capability leaves, used to render the Capabilities overview. */
 export const capabilityLeaves: NavLeaf[] = primaryNav
   .filter((e): e is NavGroup => e.type === 'group' && e.basePath === '/capabilities')
   .flatMap((g) => g.children);

@@ -11,7 +11,7 @@ type Props = {
 };
 
 /**
- * Demo-video grid stage — N video cards arranged in a responsive grid.
+ * Demo-video grid stage. N video cards arranged in a responsive grid.
  * Click a card to open the lightbox modal with the player.
  *
  * Use this when a capability has multiple demo videos. For a single-

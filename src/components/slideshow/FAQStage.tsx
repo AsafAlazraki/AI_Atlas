@@ -15,7 +15,7 @@ type Props = {
 };
 
 /**
- * Accordion FAQ stage. Sized to fit one viewport — header on top, FAQ
+ * Accordion FAQ stage. Sized to fit one viewport: header on top, FAQ
  * list fills remaining space. If the list overflows, the user can
  * collapse the open item to see the rest. Don't add internal scroll.
  */

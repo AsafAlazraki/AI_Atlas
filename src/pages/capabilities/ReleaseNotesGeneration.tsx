@@ -1,5 +1,5 @@
 /**
- * Release Notes Generation — placeholder until content is filled in.
+ * Release Notes Generation. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
@@ -7,7 +7,7 @@
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Release Notes" + accent "Generation"
  *     - tagline: Compose customer-grade release notes from merged PRs and
- *       shipped tickets — grouped by audience, written in your voice,
+ *       shipped tickets, grouped by audience, written in your voice,
  *       ready to publish.
  *     - 3 stat cards: Time to draft / Audiences (two passes) / Voice match
  *
@@ -17,7 +17,7 @@
  *     - 3 Group + summarise (UserGroupIcon)
  *     - 4 Format for distribution (MegaphoneIcon)
  *
- *  3. (Optional) In action — sample release-note diff
+ *  3. (Optional) In action: sample release-note diff
  *
  *  4. Demo video (VideoStage)
  *     - storagePath: path.capabilityVideo('release-notes-generation', '...')
@@ -35,7 +35,7 @@ export default function ReleaseNotesGeneration() {
       kicker="AI Capabilities · PhoenixDX"
       title="Release Notes"
       titleAccent="Generation"
-      tagline="Compose customer-grade release notes from merged PRs and shipped tickets — grouped by audience, written in your voice, ready to publish. Engineering managers stop dreading release day."
+      tagline="Compose customer-grade release notes from merged PRs and shipped tickets, grouped by audience, written in your voice, ready to publish. Engineering managers stop dreading release day."
     />
   );
 }

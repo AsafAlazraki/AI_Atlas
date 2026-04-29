@@ -8,7 +8,7 @@ import type { Timestamp } from 'firebase/firestore';
  * Firestore doc id, so keep them URL-safe (lowercase, hyphens only).
  */
 export type Capability = {
-  /** Firestore doc id — same as `slug`. */
+  /** Firestore doc id, same as `slug`. */
   id: string;
   /** URL slug, e.g. `rovo`. */
   slug: string;

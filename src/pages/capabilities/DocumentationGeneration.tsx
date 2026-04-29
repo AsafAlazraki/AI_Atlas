@@ -1,5 +1,5 @@
 /**
- * Documentation Generation — placeholder until content is filled in.
+ * Documentation Generation. Placeholder until content is filled in.
  *
  * INTENDED SLIDESHOW STRUCTURE (no-scroll, snap-to-fit):
  *
@@ -7,7 +7,7 @@
  *     - kicker: "AI Capabilities · PhoenixDX"
  *     - title: "Documentation" + accent "Generation"
  *     - tagline: Auto-generate the docs your team would write if they had
- *       time — READMEs, API references, ADRs, onboarding guides. Then keep
+ *       time: READMEs, API references, ADRs, onboarding guides. Then keep
  *       them in sync as the code evolves, so nothing rots.
  *     - 3 stat cards: Generation / Maintenance / Onboarding time impact
  *
@@ -17,7 +17,7 @@
  *     - ADRs (DocumentTextIcon)
  *     - Runbooks (ArrowPathRoundedSquareIcon)
  *
- *  3. (Optional) In action — repo-to-docs example
+ *  3. (Optional) In action: repo-to-docs example
  *
  *  4. Demo video (VideoStage)
  *     - storagePath: path.capabilityVideo('documentation-generation', '...')
@@ -35,7 +35,7 @@ export default function DocumentationGeneration() {
       kicker="AI Capabilities · PhoenixDX"
       title="Documentation"
       titleAccent="Generation"
-      tagline="Auto-generate the docs your team would write if they had time — READMEs, API references, architecture decision records, onboarding guides. Then keep them in sync as the code evolves, so nothing rots."
+      tagline="Auto-generate the docs your team would write if they had time: READMEs, API references, architecture decision records, onboarding guides. Then keep them in sync as the code evolves, so nothing rots."
     />
   );
 }

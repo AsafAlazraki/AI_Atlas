@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * Capability slideshow — snap-to-fit, no-scroll, one stage per viewport.
+ * Capability slideshow: snap-to-fit, no-scroll, one stage per viewport.
  *
  *  ┌─────────────────────────────────────────┐
  *  │  Stepper nav (clickable segments)       │
@@ -25,7 +25,7 @@ type Props = {
  *
  * Conventions:
  *  - Stage 1 is always the hero / intro / overview (use `HeroStage`).
- *  - Each stage MUST be designed to fit one viewport — no internal scroll.
+ *  - Each stage MUST be designed to fit one viewport. No internal scroll.
  *  - Navigation: clickable stepper segments, or ← / → keyboard arrows.
  */
 export default function Slideshow({ stages, initialIdx = 0 }: Props) {
@@ -40,7 +40,7 @@ export default function Slideshow({ stages, initialIdx = 0 }: Props) {
     setIdx(next);
   };
 
-  // Stage transition — fade + horizontal slide + inner stagger.
+  // Stage transition: fade + horizontal slide + inner stagger.
   useEffect(() => {
     if (!stageRef.current) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
