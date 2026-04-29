@@ -1,6 +1,0 @@
-{
-  "projects": {
-    "default": "pdx-ai-atlas"
-  },
-  "_comment": "Copy this file to .firebaserc and replace the project id with the real Firebase project once admin enables Hosting. The single-project model is the user's chosen environment strategy: collection prefixes (dev_/test_/prod_) handle env separation inside one Firebase project."
-}

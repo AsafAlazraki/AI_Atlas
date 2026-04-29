@@ -26,10 +26,10 @@ if (!isFirebaseConfigured && typeof window !== 'undefined') {
 const firebaseConfig = {
   apiKey: apiKey || 'AIzaSyDEMO-PLACEHOLDER-NO-ENV-LOCAL-CONFIG',
   authDomain:
-    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'demo-pdx-ai-atlas.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'demo-pdx-ai-atlas',
+    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'pdx-ai-demos.firebaseapp.com',
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'pdx-ai-demos',
   storageBucket:
-    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'demo-pdx-ai-atlas.appspot.com',
+    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'pdx-ai-demos.appspot.com',
   messagingSenderId:
     import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '000000000000',
   appId:

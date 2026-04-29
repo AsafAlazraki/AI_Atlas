@@ -9,6 +9,7 @@ For deeper specifics, see:
 - [docs/data-model.md](docs/data-model.md), Firestore schemas, security rules, Storage layout
 - [docs/recipes.md](docs/recipes.md), step-by-step playbooks for common changes
 - [docs/decisions.md](docs/decisions.md), append-only log of architectural decisions
+- [docs/handoff.md](docs/handoff.md), paste-ready prompts for mirroring to the work GitHub and wiring up Firebase from a different device
 
 ## What this is
 
@@ -19,7 +20,7 @@ A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Customer-f
 - React 19 + Vite 6 + TypeScript 5
 - Tailwind CSS 3, **dark theme only** matching phoenix-dx.com. Three palettes: `phoenix.*` (red brand), `midnight.*` (navy surfaces), `azure.*` (light-blue accent).
 - React Router v7 (library mode, `BrowserRouter`)
-- Firebase Web SDK: Auth + Firestore + Storage (Hosting pending, admin enabling it)
+- Firebase Web SDK: Auth + Firestore + Storage. Project ID: `pdx-ai-demos` (GCP org `phoenix.services`). Hosting enabled, multi-site config pending Prompt C in [docs/handoff.md](docs/handoff.md)
 - **GSAP + @gsap/react** for animation (see Motion below)
 - Heroicons (`24/outline` body, `20/solid` chevrons), clsx
 - Brand assets: `public/phoenixdx-wordmark.png`, `public/phoenixdx-icon.jpg`
@@ -91,8 +92,9 @@ The Atlas is a showcase of *capability types*, not a product page for any single
 - ✅ Firebase SDK wired (Auth, Firestore, Storage). `.env.local` is missing, needs real config to actually talk to Firebase.
 - ✅ Security rules drafted (`firestore.rules`, `storage.rules`), public reads, admin-only writes via `role: "admin"` custom claim.
 - ✅ Three local branches at the same commit: `dev`, `test`, `prod`.
-- ⏳ **No git remote.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. Initial push 403'd, `AsafAlazraki` lacks write access to the Phoenix-DX org. Will be pushed from a device with org credentials.
-- ⏳ Firebase Hosting pending admin enablement.
+- ✅ Personal mirror remote configured: `origin` → `https://github.com/AsafAlazraki/AI_Atlas.git`. All three branches synced.
+- ⏳ Work remote (`Phoenix-DX/PDX_AI_Atlas`) pending push from a device with org write access. See [docs/handoff.md](docs/handoff.md) Prompt A.
+- ✅ Firebase project `pdx-ai-demos` provisioned by admin. Hosting enabled. `.firebaserc` committed. Web-app config + Hosting deploy pending Prompt B in handoff.
 - ⏳ No demo videos uploaded yet, `<VideoStage>` renders the placeholder until `storagePath` is set on each stage.
 
 ## When you next pick this up
