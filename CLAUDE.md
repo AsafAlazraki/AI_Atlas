@@ -1,37 +1,37 @@
-# PDX AI Atlas — Claude Code project context
+# PDX AI Atlas, Claude Code project context
 
 This file is auto-loaded when Claude Code opens this folder. **Read it first** before exploring or editing.
 
 For deeper specifics, see:
 
-- [CONTRIBUTING.md](CONTRIBUTING.md) — how to contribute, branch model, PR process
-- [docs/design-system.md](docs/design-system.md) — brand, typography, components, motion
-- [docs/data-model.md](docs/data-model.md) — Firestore schemas, security rules, Storage layout
-- [docs/recipes.md](docs/recipes.md) — step-by-step playbooks for common changes
-- [docs/decisions.md](docs/decisions.md) — append-only log of architectural decisions
+- [CONTRIBUTING.md](CONTRIBUTING.md), how to contribute, branch model, PR process
+- [docs/design-system.md](docs/design-system.md), brand, typography, components, motion
+- [docs/data-model.md](docs/data-model.md), Firestore schemas, security rules, Storage layout
+- [docs/recipes.md](docs/recipes.md), step-by-step playbooks for common changes
+- [docs/decisions.md](docs/decisions.md), append-only log of architectural decisions
 
 ## What this is
 
-A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Customer-facing single-page web app — every screen will be shown to a prospect at some point. Visual polish is a feature, not an afterthought.
+A demo landscape for **PhoenixDX's AI capabilities across the SDLC**. Customer-facing single-page web app, every screen will be shown to a prospect at some point. Visual polish is a feature, not an afterthought.
 
 ## Stack at a glance
 
 - React 19 + Vite 6 + TypeScript 5
 - Tailwind CSS 3, **dark theme only** matching phoenix-dx.com. Three palettes: `phoenix.*` (red brand), `midnight.*` (navy surfaces), `azure.*` (light-blue accent).
 - React Router v7 (library mode, `BrowserRouter`)
-- Firebase Web SDK: Auth + Firestore + Storage (Hosting pending — admin enabling it)
+- Firebase Web SDK: Auth + Firestore + Storage (Hosting pending, admin enabling it)
 - **GSAP + @gsap/react** for animation (see Motion below)
 - Heroicons (`24/outline` body, `20/solid` chevrons), clsx
 - Brand assets: `public/phoenixdx-wordmark.png`, `public/phoenixdx-icon.jpg`
 
-## Hard invariants — do not break these
+## Hard invariants, do not break these
 
 ### 1. Never read or write Firestore directly
 
 All Firestore access must go through `src/lib/firestore.ts` (`col()` / `docRef()`). These prepend `VITE_FIRESTORE_PREFIX` (`dev_`, `test_`, `prod_`) so the build uses the correct env's data set.
 
 ```ts
-// WRONG — bypasses env isolation
+// WRONG, bypasses env isolation
 collection(db, 'capabilities');
 
 // RIGHT
@@ -39,13 +39,13 @@ import { col } from './lib/firestore';
 col<Capability>('capabilities');
 ```
 
-### 2. Branch model is dev / test / prod — no `main`
+### 2. Branch model is dev / test / prod, no `main`
 
 Three long-lived branches. Working branches (`feature/*`, `fix/*`, `chore/*`) are cut from `dev`. Promotion is **dev → test → prod**, never skipping a stage. `dev` is the GitHub default.
 
 Never commit directly to `dev`, `test`, or `prod`. Use PRs.
 
-### 3. AI Capability pages are no-scroll slideshows — always
+### 3. AI Capability pages are no-scroll slideshows, always
 
 Every capability page is either:
 
@@ -57,7 +57,7 @@ The standard stage order is **Overview → How it works → In action → Demo v
 
 **No scrolling.** The slideshow uses `h-[calc(100vh-8rem)]` and each stage MUST be designed to fit one viewport. If a stage doesn't fit: split it across multiple stages, drop a row, tighten copy, or move content to a smaller layout. Do not add `overflow-y-auto`.
 
-Don't write a one-off page layout for a capability. If a capability needs a layout the slideshow can't provide, extend the slideshow primitives — don't fork the pattern.
+Don't write a one-off page layout for a capability. If a capability needs a layout the slideshow can't provide, extend the slideshow primitives, don't fork the pattern.
 
 ### 4. Don't bypass the env layer
 
@@ -65,17 +65,17 @@ Don't write a one-off page layout for a capability. If a capability needs a layo
 
 ### 5. Storage media uses canonical paths
 
-Use the `path` helpers from `src/lib/storage.ts` — never hand-build storage paths. Canonical layout is `capabilities/<id>/videos|posters|thumbs/<filename>`.
+Use the `path` helpers from `src/lib/storage.ts`, never hand-build storage paths. Canonical layout is `capabilities/<id>/videos|posters|thumbs/<filename>`.
 
 ### 6. Animation respects `prefers-reduced-motion`
 
-All ambient and entrance animation must check `window.matchMedia('(prefers-reduced-motion: reduce)').matches` and bail. The existing `useEntrance`, `AnimatedBackground`, `CyclingText`, and `PhoenixVisual` already do this — copy the pattern.
+All ambient and entrance animation must check `window.matchMedia('(prefers-reduced-motion: reduce)').matches` and bail. The existing `useEntrance`, `AnimatedBackground`, `CyclingText`, and `PhoenixVisual` already do this, copy the pattern.
 
 ### 7. The system is AI / tool agnostic
 
 The Atlas is a showcase of *capability types*, not a product page for any single vendor. Each capability page can name a specific tool (Atlassian Rovo, Anthropic Claude, etc.) when it's the actual implementation, but:
 
-- The framework — `Capability` / `Video` / `FAQ` types, `Slideshow` component, env-prefixed Firestore — has no vendor field, no vendor lock-in. Adding an OpenAI / Cursor / Gemini capability page tomorrow doesn't touch any framework code.
+- The framework, `Capability` / `Video` / `FAQ` types, `Slideshow` component, env-prefixed Firestore, has no vendor field, no vendor lock-in. Adding an OpenAI / Cursor / Gemini capability page tomorrow doesn't touch any framework code.
 - Two pages can solve adjacent problems with different vendors (e.g. `Spec to Design` is structured-pipeline-vendor-agnostic; `Claude Design` is conversational-with-Claude). That's intentional. Don't fold them.
 - Don't introduce a "vendor" enum, a "providers" registry, or any abstraction that constrains future capabilities to a fixed list. The system stays open.
 
@@ -84,16 +84,16 @@ The Atlas is a showcase of *capability types*, not a product page for any single
 - ✅ Dark-themed, customer-grade UI matching phoenix-dx.com aesthetic.
 - ✅ Sidebar with expandable AI Capabilities group, Settings pinned to bottom.
 - ✅ Pages: Dashboard, Capabilities (catalog), Rovo, Multi Agent Analysis, Spec to Design, Settings.
-- ✅ Slideshow pattern in place — every capability page is a stepped slideshow ending with Demo Video + FAQ.
+- ✅ Slideshow pattern in place, every capability page is a stepped slideshow ending with Demo Video + FAQ.
 - ✅ Continuous ambient animation: flowing wireframe `AnimatedBackground` (global) + `PhoenixVisual` orbital particles (Dashboard).
 - ✅ Cycling typewriter hero text on Dashboard.
 - ✅ Build passes (`npm run build`).
-- ✅ Firebase SDK wired (Auth, Firestore, Storage). `.env.local` is missing — needs real config to actually talk to Firebase.
-- ✅ Security rules drafted (`firestore.rules`, `storage.rules`) — public reads, admin-only writes via `role: "admin"` custom claim.
+- ✅ Firebase SDK wired (Auth, Firestore, Storage). `.env.local` is missing, needs real config to actually talk to Firebase.
+- ✅ Security rules drafted (`firestore.rules`, `storage.rules`), public reads, admin-only writes via `role: "admin"` custom claim.
 - ✅ Three local branches at the same commit: `dev`, `test`, `prod`.
-- ⏳ **No git remote.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. Initial push 403'd — `AsafAlazraki` lacks write access to the Phoenix-DX org. Will be pushed from a device with org credentials.
+- ⏳ **No git remote.** Intended remote: `https://github.com/Phoenix-DX/PDX_AI_Atlas.git`. Initial push 403'd, `AsafAlazraki` lacks write access to the Phoenix-DX org. Will be pushed from a device with org credentials.
 - ⏳ Firebase Hosting pending admin enablement.
-- ⏳ No demo videos uploaded yet — `<VideoStage>` renders the placeholder until `storagePath` is set on each stage.
+- ⏳ No demo videos uploaded yet, `<VideoStage>` renders the placeholder until `storagePath` is set on each stage.
 
 ## When you next pick this up
 
@@ -104,11 +104,11 @@ The Atlas is a showcase of *capability types*, not a product page for any single
    git push -u origin test
    git push -u origin prod
    ```
-2. **Wire Firebase env vars** — populate `.env.local` from `.env.example` with real Firebase web config.
-3. **Upload first demo videos** — see [recipes.md](docs/recipes.md#add-a-demo-video-to-a-capability).
-4. **Add a sign-in screen** — Firebase Auth wired but no UI yet.
+2. **Wire Firebase env vars**, populate `.env.local` from `.env.example` with real Firebase web config.
+3. **Upload first demo videos**, see [recipes.md](docs/recipes.md#add-a-demo-video-to-a-capability).
+4. **Add a sign-in screen**, Firebase Auth wired but no UI yet.
 5. **Populate seed Firestore data** for `dev_capabilities`, `dev_videos`, `dev_faqs` so the catalog can read live data instead of relying on hardcoded nav entries.
-6. **Set up CI/CD** when Hosting is enabled — GitHub Action per branch, env-aware build.
+6. **Set up CI/CD** when Hosting is enabled, GitHub Action per branch, env-aware build.
 
 ## Common commands
 
@@ -161,10 +161,10 @@ PDX_AI_ATLAS/
     │       └── VideoStage.tsx        Firebase Storage video player + placeholder (h-full)
     ├── pages/
     │   ├── Dashboard.tsx             Two-column hero (left) + PhoenixVisual (right), no scroll
-    │   ├── Capabilities.tsx          Catalog overview — auto-renders cards from capabilityLeaves
+    │   ├── Capabilities.tsx          Catalog overview, auto-renders cards from capabilityLeaves
     │   ├── Settings.tsx              Runtime config display
     │   └── capabilities/
-    │       ├── AtlassianRovo.tsx     ← BUILT EXAMPLE — full no-scroll slideshow
+    │       ├── AtlassianRovo.tsx     ← BUILT EXAMPLE, full no-scroll slideshow
     │       ├── MultiAgentAnalysis.tsx Placeholder (CapabilityComingSoon)
     │       ├── GitHubCopilot.tsx     Placeholder (CapabilityComingSoon)
     │       ├── CodeReview.tsx        Placeholder (CapabilityComingSoon)
@@ -176,10 +176,10 @@ PDX_AI_ATLAS/
     ├── lib/
     │   ├── env.ts                    appEnv + firestorePrefix (read VITE_* once)
     │   ├── firebase.ts               app, auth, db, storage initialisation
-    │   ├── firestore.ts              col() + docRef() — env-prefixed wrappers
+    │   ├── firestore.ts              col() + docRef(), env-prefixed wrappers
     │   ├── nav.ts                    NavLeaf + NavGroup; primaryNav, footerNav, capabilityLeaves
     │   ├── storage.ts                resolveVideoUrl(), uploadFile(), path.* helpers
-    │   └── useEntrance.ts            GSAP hook — staggered fade-up on `.gsap-fade` elements
+    │   └── useEntrance.ts            GSAP hook, staggered fade-up on `.gsap-fade` elements
     └── types/
         ├── capability.ts             Capability Firestore type
         ├── faq.ts                    FAQ Firestore type
@@ -216,21 +216,21 @@ export default function MyPage() {
 }
 ```
 
-Capability pages skip this and use `<Slideshow>` instead — see [recipes.md](docs/recipes.md#add-a-new-ai-capability).
+Capability pages skip this and use `<Slideshow>` instead, see [recipes.md](docs/recipes.md#add-a-new-ai-capability).
 
 ## Style notes for new code
 
-- **Dark theme only** — page bg `midnight-950`, text white. No `bg-white`, no `text-gray-*`.
+- **Dark theme only**, page bg `midnight-950`, text white. No `bg-white`, no `text-gray-*`.
 - **TypeScript strict.** No `any`.
-- **`clsx`** for conditional class names — not template strings.
+- **`clsx`** for conditional class names, not template strings.
 - **Component classes** in `index.css`: `card`, `card-glow`, `btn-primary`, `btn-ghost`, `accent-phrase`, `hairline`. Prefer these over re-rolling.
 - **Animation modes:**
-  - *Entrance* — `useEntrance` + `.gsap-fade` class (one-shot, on mount).
-  - *Ambient* — `AnimatedBackground`, `PhoenixVisual` (continuous, GSAP-driven, `prefers-reduced-motion`-aware).
-  - *Interaction* — Tailwind `hover:*` / `transition-*` only. Don't use GSAP for hover.
+  - *Entrance*, `useEntrance` + `.gsap-fade` class (one-shot, on mount).
+  - *Ambient*, `AnimatedBackground`, `PhoenixVisual` (continuous, GSAP-driven, `prefers-reduced-motion`-aware).
+  - *Interaction*, Tailwind `hover:*` / `transition-*` only. Don't use GSAP for hover.
 - **Heroicons 24/outline** by default; `20/solid` for chevrons / status dots.
 - **No `any`.** No light-mode classes. No direct `collection(db, …)`. No hand-built storage paths. These are review blockers.
 
 ## Decisions log
 
-See [docs/decisions.md](./docs/decisions.md). Append every architectural decision worth recording — most-recent at top.
+See [docs/decisions.md](./docs/decisions.md). Append every architectural decision worth recording, most-recent at top.

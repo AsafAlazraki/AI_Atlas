@@ -1,6 +1,6 @@
 # Recipes
 
-Step-by-step playbooks for the most common changes. Run through the matching recipe before improvising — it'll save review cycles and keep the codebase coherent.
+Step-by-step playbooks for the most common changes. Run through the matching recipe before improvising, it'll save review cycles and keep the codebase coherent.
 
 ---
 
@@ -17,7 +17,7 @@ Goal: a new entry in the AI Capabilities sidebar group, a new card on the Capabi
 - The FAQs array
 - Stage list
 
-Stages are typed as `SlideshowStage[]` from `src/types/slideshow.ts`. Use `<ContentStage>`, `<VideoStage>`, `<FAQStage>` building blocks — don't reinvent.
+Stages are typed as `SlideshowStage[]` from `src/types/slideshow.ts`. Use `<ContentStage>`, `<VideoStage>`, `<FAQStage>` building blocks, don't reinvent.
 
 **3. Wire the route.** In `src/App.tsx`, add a new `<Route>` under `/capabilities`:
 
@@ -37,7 +37,7 @@ Stages are typed as `SlideshowStage[]` from `src/types/slideshow.ts`. Use `<Cont
 },
 ```
 
-The Capabilities overview page reads from `capabilityLeaves` automatically — your new capability will appear there with no extra work.
+The Capabilities overview page reads from `capabilityLeaves` automatically, your new capability will appear there with no extra work.
 
 **5. Verify.**
 
@@ -115,7 +115,7 @@ Brand tokens live in `tailwind.config.ts` under `theme.extend.colors`. Change th
 **Don't:**
 - Hard-code hexes inline in components.
 - Add a colour to one component without adding a token.
-- Use Tailwind's stock `red-*` / `blue-*` / `slate-*` for brand-purpose elements — they drift.
+- Use Tailwind's stock `red-*` / `blue-*` / `slate-*` for brand-purpose elements, they drift.
 
 After changing a token, scan the diff with `git grep` for any inline hexes that should now use the new token. Update [docs/design-system.md](design-system.md) if you've added or renamed a token.
 
@@ -123,7 +123,7 @@ After changing a token, scan the diff with `git grep` for any inline hexes that 
 
 ## Add a new top-level nav item
 
-Discuss with the team first — the IA is intentionally narrow (Dashboard / AI Capabilities / Settings). Adding a top-level item is rare and meaningful.
+Discuss with the team first, the IA is intentionally narrow (Dashboard / AI Capabilities / Settings). Adding a top-level item is rare and meaningful.
 
 If approved:
 
@@ -166,7 +166,7 @@ admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 })();
 ```
 
-After this, the user can write to Firestore and Storage per the rules. Don't commit the service account JSON — keep it out of the repo.
+After this, the user can write to Firestore and Storage per the rules. Don't commit the service account JSON, keep it out of the repo.
 
 ---
 
@@ -174,7 +174,7 @@ After this, the user can write to Firestore and Storage per the rules. Don't com
 
 Firebase Hosting is pending admin enablement. When it's available:
 
-1. Hosting site per branch — `pdx-ai-atlas-dev`, `pdx-ai-atlas-test`, `pdx-ai-atlas-prod`.
+1. Hosting site per branch, `pdx-ai-atlas-dev`, `pdx-ai-atlas-test`, `pdx-ai-atlas-prod`.
 2. GitHub Action builds on push to each branch and deploys to the matching Hosting site.
 3. Branch-specific `VITE_*` env vars injected at build time.
 4. Branch protection on all three branches.

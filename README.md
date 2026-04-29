@@ -12,7 +12,7 @@ Single-page web app (React + Vite + TypeScript) styled with Tailwind, backed by 
 - **Styling:** Tailwind CSS 3 (PhoenixDX red as primary brand token)
 - **Routing:** React Router v7 (library mode)
 - **Backend:** Firebase Auth + Firestore
-- **Hosting:** Firebase Hosting (to be enabled by admin — branch-mapped sites)
+- **Hosting:** Firebase Hosting (to be enabled by admin, branch-mapped sites)
 - **Icons:** Heroicons
 
 ---
@@ -39,7 +39,7 @@ Open http://localhost:5173.
 
 ## Branch strategy
 
-Three long-lived environment branches — each maps to a Firebase Hosting site and its own Firestore collection set. Working branches live underneath.
+Three long-lived environment branches, each maps to a Firebase Hosting site and its own Firestore collection set. Working branches live underneath.
 
 ```
                                                  ┌──────────────┐
@@ -87,7 +87,7 @@ Each branch builds with environment-specific variables that point its data layer
 | ------ | -------------- | ----------------------- | ------------------------------ |
 | `dev`  | `dev`          | `dev_`                  | `dev_capabilities`, `dev_demos`, … |
 | `test` | `test`         | `test_`                 | `test_capabilities`, `test_demos`, … |
-| `prod` | `prod`         | `prod_`                 | `capabilities`, `demos`, …  *(or `prod_` — your call)* |
+| `prod` | `prod`         | `prod_`                 | `capabilities`, `demos`, …  *(or `prod_`, your call)* |
 
 All Firestore access **must** go through `src/lib/firestore.ts` (`col()` and `docRef()` helpers) so the prefix is applied consistently. Do **not** call `collection(db, …)` directly in feature code.
 
@@ -114,7 +114,7 @@ src/
 └── lib/
     ├── env.ts               Reads VITE_APP_ENV, VITE_FIRESTORE_PREFIX
     ├── firebase.ts          Initialises Firebase app, auth, db
-    ├── firestore.ts         col() + docRef() — env-prefixed
+    ├── firestore.ts         col() + docRef(), env-prefixed
     └── nav.ts               Shared nav item list
 ```
 
@@ -134,4 +134,4 @@ Until hosting is available, `npm run build` produces a static `dist/` bundle tha
 
 ## License
 
-Proprietary — © PhoenixDX. All rights reserved.
+Proprietary, © PhoenixDX. All rights reserved.

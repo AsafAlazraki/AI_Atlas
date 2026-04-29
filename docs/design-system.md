@@ -24,7 +24,7 @@ PhoenixDX brand: **red and dark navy**, with a light-blue accent for highlighted
 | `midnight-400`    | `#64748B` | Even more muted (timestamps, labels)                               |
 | `white`           | `#FFFFFF` | Primary text                                                       |
 
-Source the live values from `tailwind.config.ts` — that file is the single source of truth, this table is summary.
+Source the live values from `tailwind.config.ts`, that file is the single source of truth, this table is summary.
 
 ### When to use red vs. azure
 
@@ -51,7 +51,7 @@ Display sizes for hero / page titles (defined in `tailwind.config.ts`):
 | `text-display-md`   | 3 rem      | Page hero (default)                  |
 | `text-display-lg`   | 3.75 rem   | Dashboard hero, biggest impact       |
 
-Body sizes — use Tailwind defaults: `text-base` for paragraphs, `text-sm` for muted/secondary text.
+Body sizes, use Tailwind defaults: `text-base` for paragraphs, `text-sm` for muted/secondary text.
 
 **Kicker** (uppercase eyebrow above display headings):
 
@@ -71,14 +71,14 @@ Use this on every hero. It anchors the visual rhythm.
 
 | Class            | What it gives you                                                 |
 | ---------------- | ----------------------------------------------------------------- |
-| `card`           | Standard surface — rounded-2xl, dark border, subtle inner highlight |
+| `card`           | Standard surface, rounded-2xl, dark border, subtle inner highlight |
 | `card-glow`      | Like `card` plus diagonal corner glow (red top-left, blue top-right) |
 | `btn-primary`    | Phoenix-red pill CTA with glow shadow on hover                    |
 | `btn-ghost`      | Outlined pill with dark fill, secondary CTA                       |
-| `accent-phrase`  | `text-azure-300` — for highlighted phrases inside headings        |
+| `accent-phrase`  | `text-azure-300`, for highlighted phrases inside headings        |
 | `hairline`       | Subtle horizontal divider with gradient                           |
 
-Prefer these over hand-rolling card or button styles. If you need a variant, extend the class — don't bypass it.
+Prefer these over hand-rolling card or button styles. If you need a variant, extend the class, don't bypass it.
 
 ### Spacing rhythm
 
@@ -97,7 +97,7 @@ Prefer these over hand-rolling card or button styles. If you need a variant, ext
 
 Three motion *modes* with strict separation:
 
-### a) Entrance — staggered fade-up on page load
+### a) Entrance, staggered fade-up on page load
 
 Implementation: `useEntrance` hook (in `src/lib/useEntrance.ts`) targets every `.gsap-fade` element inside a scoped ref. Uses GSAP `power3.out` ease, 0.7s, 0.07s stagger.
 
@@ -113,17 +113,17 @@ return (
 );
 ```
 
-Slideshow pages use this pattern internally — page authors get it for free.
+Slideshow pages use this pattern internally, page authors get it for free.
 
-### b) Ambient — continuous, subtle background motion
+### b) Ambient, continuous, subtle background motion
 
 Implementation: `<AnimatedBackground>` (mounted in `DashboardLayout`). Renders flowing dotted SVG curves that animate via `stroke-dashoffset`. **Always on**, behind all content, pointer-events: none.
 
-The animated `<PhoenixVisual>` on the Dashboard is the other ambient element — orbital particles, breathing icon, pulse rings.
+The animated `<PhoenixVisual>` on the Dashboard is the other ambient element, orbital particles, breathing icon, pulse rings.
 
-### c) Interaction — Tailwind transitions on hover / focus
+### c) Interaction, Tailwind transitions on hover / focus
 
-Hover transitions stay in CSS (Tailwind `transition-*`, `hover:*`, `group-hover:*`). Don't reach for GSAP for hover effects — overkill and breaks consistency.
+Hover transitions stay in CSS (Tailwind `transition-*`, `hover:*`, `group-hover:*`). Don't reach for GSAP for hover effects, overkill and breaks consistency.
 
 ### Reduced motion
 
@@ -180,8 +180,8 @@ Always uses `<Slideshow>` from `src/components/Slideshow.tsx`. Stages compose `<
 
 Heroicons throughout. Two styles, used differently:
 
-- `@heroicons/react/24/outline` — body content, feature icons, nav, CTAs. **Default.**
-- `@heroicons/react/20/solid` — chevrons, status dots, dense compact UI.
+- `@heroicons/react/24/outline`, body content, feature icons, nav, CTAs. **Default.**
+- `@heroicons/react/20/solid`, chevrons, status dots, dense compact UI.
 
 Don't mix in icons from other libraries (Lucide, Feather, etc.). Consistency over personal preference.
 
@@ -194,7 +194,7 @@ Don't mix in icons from other libraries (Lucide, Feather, etc.). Consistency ove
 | `phoenixdx-wordmark.png`       | `public/phoenixdx-wordmark.png`     | Sidebar header (expanded), any horizontal lockup |
 | `phoenixdx-icon.jpg`           | `public/phoenixdx-icon.jpg`         | Sidebar header (collapsed), favicon, dashboard PhoenixVisual centre |
 
-The wordmark is dark-bg-ready (white "Phoenix" + red "DX" + icon, transparent background). Don't place it on a light background — readability dies.
+The wordmark is dark-bg-ready (white "Phoenix" + red "DX" + icon, transparent background). Don't place it on a light background, readability dies.
 
 If you need a new brand asset variant (small icon, white-only, etc.) request from PhoenixDX and store it in `public/` with a clear filename like `phoenixdx-icon-white.svg`.
 
