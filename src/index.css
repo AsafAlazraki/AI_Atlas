@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply font-sans antialiased text-ink-800 bg-surface-subtle;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-phoenix-500 ring-offset-2 ring-offset-surface-subtle rounded-md;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-xl border border-ink-100 shadow-card;
+  }
+}
